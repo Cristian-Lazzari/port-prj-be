@@ -1,0 +1,59 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Player;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+class PlayersTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $users = [
+            [
+                'role'      => 'gio',
+                'nickname'  => 'Gio',
+                'name'      => 'Giordano',
+                'surname'   => 'Giorgi',
+                'phone'     => '3385314356',
+                'mail'      => 'info@future-plus.it',
+                'sex'       => 'm',
+                'birth_date'=> '1999-01-01'
+            ],
+            [
+                'role'      => 'trainer',
+                'nickname'  => 'Dany',
+                'name'      => 'Daniel',
+                'surname'   => 'Martín',
+                'phone'     => '3394773897',
+                'mail'      => 'rdanielmartin10@gmail.com',
+                'sex'       => 'm',
+                'birth_date'=> '1999-01-01'
+            ],
+            [
+                'role'      => 'player',
+                'nickname'  => 'Cris',
+                'name'      => 'Cristian',
+                'surname'   => 'Lazzari',
+                'phone'     => '3271622244',
+                'mail'      => 'info@future-plus.it',
+                'sex'       => 'm',
+                'birth_date'=> '1999-01-01'
+            ],
+            
+            
+
+        ];
+
+        foreach ($users as $u) {
+            Player::create($u);
+        }
+
+    }
+}
