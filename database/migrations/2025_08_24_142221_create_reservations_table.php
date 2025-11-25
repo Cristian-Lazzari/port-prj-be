@@ -14,15 +14,21 @@ return new class extends Migration
     public function up(){
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('date_slot', 18);
-            $table->string('field'); // 1, 2, 3 
+
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('boat_id');
+            $table->unsignedBigInteger('slot_id');
+
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('boat_id')->references('id')->on('boats')->onDelete('cascade');
+            $table->foreign('slot_id')->references('id')->on('slots')->onDelete('cascade');
+
+           
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+
             $table->string('status'); // 1 confirmed, 2 cancelled, 3 noshow
             $table->string('message')->nullable(); // messaggio opzionale
-            $table->string('type'); //padel, basket , calcio ...
-            $table->text  ('dinner'); //[ status, ospiti, orario]
-            $table->tinyInteger('booking_subject'); //[id di chi ha fatto la prenotazione]
-            $table->tinyInteger('duration'); //n * 30minuti
-
 
             $table->timestamps();
         });

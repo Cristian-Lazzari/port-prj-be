@@ -57,9 +57,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::where('id',$id)->with('players')->first();
         
-        $player = Player::find($reservation->booking_subject);
-        $reservation->booking_subject_name = $player->name ?? '';
-        $reservation->booking_subject_surnname = $player->surname ?? '';
+
         return view('admin.Reservations.show', compact('reservation'));
     }
 
@@ -71,12 +69,9 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        $reservation = Reservation::where('id',$id)->with('players')->first();
-        $players = Player::where("role", "player")->get();
-        $player = Player::find($reservation->booking_subject);
-        $reservation->booking_subject_name = $player->name ?? '';
-        $reservation->booking_subject_surnname = $player->surname ?? '';
-        return view('admin.Reservations.edit', compact('reservation','players'));
+        $reservation = Reservation::where('id',$id)->first();
+       
+        return view('admin.Reservations.edit', compact('reservation'));
     }
 
     /**
@@ -89,21 +84,7 @@ class ReservationController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $reservation = Reservation::find($id);
-        $old_dinner = json_decode($reservation->dinner, 1);
-
-        if($old_dinner['status']){
-            $old_dinner['guests'] = $data['guests'];
-            $old_dinner['time'] = $data['time'];
-            $reservation->dinner = json_encode($old_dinner);
-        }
-        $reservation->status = $data['status'];
-        $reservation->update();
-        if (array_key_exists('players',$data)) {
-            $reservation->players()->sync($data['players']);
-        } else {
-            $reservation->players()->sync([]);
-        }
+        
         return redirect()->route('admin.reservations.index')->with('message', 'Prenotazione modificata con successo');
     }
 
