@@ -71,14 +71,15 @@ class ClientController extends Controller
   
     public function show($id)
     {
-        //
+        $client = Client::findOrFail($id);
+        return view('admin.Clients.show', compact('client'));
     }
 
 
     public function edit($id)
     {
-        $clients = Clients::findOrFail($id);
-        return view('admin.Clients.edit', compact('clients'));
+        $client = Client::findOrFail($id);
+        return view('admin.Clients.edit', compact('client'));
     }
 
     public function update(Request $request, $id)

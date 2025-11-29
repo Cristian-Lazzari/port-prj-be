@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('surname', 50);
             $table->string('phone', 20);
             $table->string('mail', 50);
+            $table->string('status')->default('0'); // 1 attivo // 0 non attivo
             $table->text('document')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();

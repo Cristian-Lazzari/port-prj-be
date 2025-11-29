@@ -17,6 +17,7 @@ class ClientsTableSeeder extends Seeder
                 'surname' => fake()->name(),
                 'mail' => fake()->unique()->safeEmail(),
                 'phone' => fake()->phoneNumber(),
+                'status' => 1,
             ]);
         }
     }

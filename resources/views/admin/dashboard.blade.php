@@ -189,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="item">
                             <div class="slot">${r.slot.name}</div>
                             <div class="date">
-                                <p class="ex">Da <strong>${formatShortWithWeekday(r.start_date)}</strong></p>
-                                <p>A <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
+                                <p>Da <strong>${formatShortWithWeekday(r.start_date)}</strong></p>
+                                <p class="ex">A <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
                             </div>
                             <div class="status">confermata</div>
                         </div>

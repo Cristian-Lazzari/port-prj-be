@@ -56,6 +56,7 @@
     </div>
 
     <div class="info_box_day" id="reservations-list">
+        <div class="box">
         @foreach ($reservations as $r)
         @php
             $formatter = new IntlDateFormatter(
@@ -67,7 +68,6 @@
                 'EEE dd MMM '
             );
         @endphp
-        <div class="box">
             <div class="wrap_item">
                 <div class="top">
                     <div class="client">{{$r->client->name}} {{$r->client->surname}}</div> <div class="boat">{{$r->boat->name}}</div>
@@ -82,9 +82,9 @@
                     
                 </div>
             </div>
-        </div>
-
+            
         @endforeach
+        </div>
     </div>
 </div>
 
