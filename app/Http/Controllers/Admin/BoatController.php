@@ -2,28 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Player;
-use App\Models\Setting;
-use App\Models\Reservation;
-use Illuminate\Http\Request;
-use App\Mail\confermaOrdineAdmin;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class BoatController extends Controller
 {
-    
-
-
-
-
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $reservations = Reservation::with('client','boat')->orderBy('created_at', 'desc')->get();
-
-        return view('admin.Reservations.index', compact('reservations'));
+        //
     }
 
     /**
@@ -55,10 +46,7 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        $reservation = Reservation::where('id',$id)->with('players')->first();
-        
-
-        return view('admin.Reservations.show', compact('reservation'));
+        //
     }
 
     /**
@@ -69,9 +57,7 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        $reservation = Reservation::where('id',$id)->first();
-       
-        return view('admin.Reservations.edit', compact('reservation'));
+        //
     }
 
     /**
@@ -83,9 +69,7 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        
-        return redirect()->route('admin.reservations.index')->with('message', 'Prenotazione modificata con successo');
+        //
     }
 
     /**

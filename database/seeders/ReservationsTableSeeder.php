@@ -2,51 +2,44 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Reservation;
+use App\Models\Client;
+use App\Models\Boat;
+use App\Models\Slot;
 
 class ReservationsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $fields   = ['Campo 1', 'Campo 2', 'Campo 3'];
-        $statuses = [1, 2, 3];
-        $sport = ['Padel', 'Calcio'];
-        $status   = [true, false];
+        $clients = Client::all();
+        $slots = Slot::all();
 
-        for ($i = 0; $i < 5; $i++) { // più prenotazioni
-            // giorno casuale entro i prossimi 30 giorni
-            $date = now()->addDays(rand(0, 30));
+        foreach ($clients as $client) {
+            $boats = $client->boats;
 
-            // ora casuale tra 10:00 e 23:30
-            $hour   = rand(10, 23);
-            $minute = rand(0, 1) ? '00' : '30'; // minuti sempre 00 o 30
+            foreach ($boats as $boat) {
+                // Ogni barca fa 1-3 prenotazioni
+                $reservationsCount = rand(1, 3);
 
-            $dateSlot = $date->setTime($hour, (int) $minute);
+                for ($i = 0; $i < $reservationsCount; $i++) {
+                    $slot = $slots->random();
 
-            DB::table('reservations')->insert([
-                'date_slot' => $dateSlot->format('Y-m-d H:i'),
-                'field'     => $fields[array_rand($fields)],
-                'status'    => $statuses[array_rand($statuses)],
-                'type'      => $sport[array_rand($sport)],
-                'message'   => rand(0, 1) ? Str::random(20) : null,
-                'dinner'    => json_encode([
-                    'status' => array_rand($status),
-                    'guests' => rand(1, 8),
-                    'time' => $dateSlot->format('H:i')
-                ]),
-                'duration' => rand(2, 3),
-                'booking_subject' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                    $start = now()->addDays(rand(1, 30))->setHour(rand(8, 18))->setMinute(0);
+                    $end = (clone $start)->addDays(rand(1, 30));
+
+                    // Solo se compatibile con lo slot
+                    if ($boat->loa <= $slot->loa && $boat->draft <= $slot->draft && $boat->beam <= $slot->beam) {
+                        Reservation::create([
+                            'client_id' => $client->id,
+                            'boat_id' => $boat->id,
+                            'slot_id' => $slot->id,
+                            'start_date' => $start,
+                            'end_date' => $end,
+                        ]);
+                    }
+                }
+            }
         }
     }
 }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('boat_id');
             $table->unsignedBigInteger('slot_id');
 
+            
+
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->foreign('boat_id')->references('id')->on('boats')->onDelete('cascade');
             $table->foreign('slot_id')->references('id')->on('slots')->onDelete('cascade');
@@ -27,7 +29,7 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
 
-            $table->string('status'); // 1 confirmed, 2 cancelled, 3 noshow
+            $table->string('status')->default('0'); // 1 confirmed, 2 cancelled, 3 noshow
             $table->string('message')->nullable(); // messaggio opzionale
 
             $table->timestamps();

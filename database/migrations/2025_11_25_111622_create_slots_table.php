@@ -20,7 +20,7 @@ return new class extends Migration
             $table->mediumInteger('loa');
             $table->mediumInteger('beam');
             $table->mediumInteger('draft');
-            $price->mediumInteger('price');
+            $table->mediumInteger('price');
             $table->text('type')->nullable();
 
             $table->timestamps();

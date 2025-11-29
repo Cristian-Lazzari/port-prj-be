@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+
+class ClientController extends Controller
+{
+    private $validations = [
+
+        'mail'       => 'required|string|min:5|unique:clients,mail',
+        'phone'      => 'required|min:9',
+        'name'       => 'required|string',
+        'surname'    => 'required|string',
+        'document'=> 'nullable|file|mimes:pdf,jpg,jpeg,png,gif,webp,svg,bmp,tiff|max:1024',
+    ];
+    private $validations_1 = [
+
+        'mail'       => 'required|string|min:2',
+        'phone'      => 'required|min:9',
+        'name'       => 'required|string',
+        'surname'    => 'required|string',
+
+        'document'=> 'nullable|file|mimes:pdf,jpg,jpeg,png,gif,webp,svg,bmp,tiff|max:1024',
+    ];
+    
+    public function index()
+    {
+        $clients = Client::with('reservations','boats')->orderBy('created_at', 'desc')->get();
+
+        return view('admin.Clients.index', compact('clients'));
+    }
+
+    public function create()
+    {
+        return view('admin.Clients.create');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $request->validate($this->validations);
+        
+        
+        $client = new Client();
+
+        $client->name = $data['name'];
+        $client->surname = $data['surname'];
+        $client->phone = $data['phone'];
+        $client->mail = $data['mail'];
+        $client->note = $data['note'];
+        
+        if (isset($data['document'])) {
+            $documentPath = Storage::put('public/uploads', $data['document']);
+            $client->document = $documentPath;
+        } 
+        $client->save();
+
+        if (isset($data['add_new'])) {
+            $m = 'Il cliente "' . $data['surname'] . '" è stato registrato correttamente. Puoi aggiungerne un altro';
+            return to_route('admin.clients.create')->with('create_success', $m);      
+        }
+        
+        $m = 'Il cliente "' . $data['surname'] . '" è stato registrato correttamente';
+        return to_route('admin.clients.index')->with('message', $m);      
+    }
+
+  
+    public function show($id)
+    {
+        //
+    }
+
+
+    public function edit($id)
+    {
+        $clients = Clients::findOrFail($id);
+        return view('admin.Clients.edit', compact('clients'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $request->validate($this->validations_1);
+        
+        
+        $client = Client::findOrFail($id);
+
+        $client->name = $data['name'];
+        $client->surname = $data['surname'];
+        $client->phone = $data['phone'];
+        $client->mail = $data['mail'];
+        $client->note = $data['note'];
+        if (isset($data['document'])) {
+            if($client->document){
+                Storage::delete($client->document);
+            }
+            $documentPath = Storage::put('public/uploads', $data['document']);
+            $client->document = $documentPath;
+        } 
+        $client->update();
+
+        $message = 'Il cliente "' . $data['surname'] . '" è stato modificato correttamente';
+        return to_route('admin.clients.index')->with('message', $message);   
+    }
+
+    public function destroy($id)
+    {
+        $client = Client::findOrFail($id);
+        
+        // stacca tutte le associazioni con le reservations
+        $client->reservations()->detach();
+        $client->boat()->detach();
+        $client->delete();
+
+        $m = 'Il giocatore "' . $client->nickname . '" è stato eliminato correttamente';
+        return to_route('admin.clients.index')->with('message', $m);      
+    }
+}

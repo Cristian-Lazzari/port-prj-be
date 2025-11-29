@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('surname', 50);
             $table->string('phone', 20);
             $table->string('mail', 50);
-            $table->text('document');
+            $table->text('document')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

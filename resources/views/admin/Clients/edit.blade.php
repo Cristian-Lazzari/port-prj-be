@@ -2,87 +2,19 @@
 
 @section('contents')
     
-
 <div class="page_nav">
-
-@if (session('message'))
-    @php
-        $message = session('message');
-    @endphp
-    <div class="alert-cont">
-        <div class="alert alert-dismissible fade show notify_success" role="alert">
-            {{$message}}
-            <button type="button" class="btn-close close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-@endif
-
-
     <h1 class="my-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus-circle-fill mx-3" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-            </svg>
-        Crea nuovo player</h1>
-    <form class="creation mt-5"  action="{{ route('admin.players.store') }}"  enctype="multipart/form-data"  method="POST">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil-square mx-3" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+        </svg>
+        Modifica #{{$client->name . ' ' . $client->surname}}</h1>
+    <form class="creation mt-5"  action="{{ route('admin.clients.update', $client) }}"  enctype="multipart/form-data"  method="POST">
         @csrf
+        @method('PUT')
+
         <section class="base">
             <div class="split">    
-                <div>
-                    <label class="label_c" for="nickname">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type" viewBox="0 0 16 16">
-                            <path d="m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081zm2.7-7.923L6.34 9.314H3.51l1.4-4.156zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525"/>
-                            </svg>
-                        NickName</label>
-                    <input class="w-100" value="{{ old('nickname') }}" type="text" name="nickname" id="nickname" placeholder=" Inserisci un nickname ">
-                    @error('nickname') <p class="error">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label class="label_c" for="sex">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gender-ambiguous" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"/>
-                        </svg>
-                        Sesso
-                    </label>
-                    <p>
-                        <select name="sex" id="sex">
-                            <option value="m">M</option>
-                            <option value="f">F</option>
-                        </select>
-                    </p>
-                    @error('sex') <p class="error">{{ $message }}</p> @enderror
-                </div>    
-            </div>
-    
-            <div class="split">    
-                <div>
-                    <label class="label_c" for="file-input">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
-                            <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-                            <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z"/>
-                        </svg>
-                        Certificate
-                    </label>
-                    <p>
-                        <input type="file" id="file-input" name="image" accept="application/pdf,image/*">
-                    </p>
-                    @error('image') <p class="error">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label class="label_c" for="path">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                        </svg>
-                        Livello Giocatore
-                    </label>
-                    <p>
-                        <input value="{{ old('level') }}" type="text" name="level" id="level" placeholder=" Inserisci il livello del giocatore">
-                    </p>
-                    @error('level') <p class="error">{{ $message }}</p> @enderror
-                </div>        
-                    
-            </div>
-            <div class="split">    
-    
                 <div>
                     <label class="label_c" for="name">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type" viewBox="0 0 16 16">
@@ -91,7 +23,7 @@
                         Nome
                     </label>
                     <p>
-                        <input value="{{ old('name') }}" type="text" name="name" id="name" placeholder=" Inserisci il nome">
+                        <input value="{{ old('name', $client->name) }}" type="text" name="name" id="name" placeholder=" Inserisci il nome">
                     </p>
                     @error('name') <p class="error">{{ $message }}</p> @enderror
                 </div>        
@@ -103,7 +35,7 @@
                         Cognome
                     </label>
                     <p>
-                        <input value="{{ old('surname') }}" type="text" name="surname" id="surname" placeholder=" Inserisci il cognome">
+                        <input value="{{ old('surname', $client->surname) }}" type="text" name="surname" id="surname" placeholder=" Inserisci il cognome">
                     </p>
                     @error('surname') <p class="error">{{ $message }}</p> @enderror
                 </div>        
@@ -119,7 +51,7 @@
                         Email
                     </label>
                     <p>
-                        <input value="{{ old('mail') }}" type="text" name="mail" id="mail" placeholder="Inserisci la mail">
+                        <input value="{{ old('mail', $client->mail) }}" type="text" name="mail" id="mail" placeholder="Inserisci la mail">
                     </p>
                     @error('mail') <p class="error">{{ $message }}</p> @enderror
                 </div>        
@@ -131,10 +63,25 @@
                         Telefono
                     </label>
                     <p>
-                        <input value="{{ old('phone') }}" type="text" name="phone" id="phone" placeholder="Inserisci il telefono">
+                        <input value="{{ old('phone', $client->phone) }}" type="text" name="phone" id="phone" placeholder="Inserisci il telefono">
                     </p>
                     @error('phone') <p class="error">{{ $message }}</p> @enderror
                 </div>        
+            </div>
+            <div class="p">    
+                <div>
+                    <label class="label_c" for="file-input">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-image" viewBox="0 0 16 16">
+                            <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                            <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z"/>
+                        </svg>
+                        Documento Cliente
+                    </label>
+                    <p>
+                        <input type="file" id="file-input" name="document" accept="application/pdf,image/*">
+                    </p>
+                    @error('document') <p class="error">{{ $message }}</p> @enderror
+                </div>
             </div>
             <p class="desc"> 
                 <label class="label_c" for="note">
@@ -144,23 +91,20 @@
                     Note 
     
                 </label>
-                <textarea name="note" id="note" cols="30" rows="10" >{{ old('note') }}</textarea>
+                <textarea name="note" id="note" cols="30" rows="10" >{{ old('note', $client->note) }}</textarea>
                 @error('note') <p class="error">{{ $message }}</p> @enderror
             </p>
     
         </section>
         <p>* Campi facoltativi</p>
-
-        
-        
-        <div class="action_page">
-    
-            <button class="my_btn_3"  type="submit">Conferma</button>
-            <button class="my_btn_2" name="add_new" value="1" type="submit">Conferma e creane un altro</button>
+        <div class="action_page">    
+            <button class="my_btn_3"  type="submit">Modifica</button>
         </div>
+        
+        
     </form>
-</div>
 
+</div>
 
 
 @endsection
