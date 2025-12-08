@@ -22,6 +22,7 @@ class BoatsTableSeeder extends Seeder
                     'loa' => rand(20, 100),    // lunghezza in decimetri
                     'draft' => rand(5, 20),    // pescaggio in decimetri
                     'beam' => rand(5, 20),     // larghezza in decimetri
+                    'model' => rand(5, 20),     // larghezza in decimetri
                     'serial_code' => rand(5, 20),     // larghezza in decimetri
                     'type' => rand(1, 3),     // larghezza in decimetri
                 ]);

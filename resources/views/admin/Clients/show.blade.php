@@ -3,54 +3,65 @@
 @section('contents')
     
 <div class="page_nav">
+
+@php $type = [ 1 => 'Barca a motore', 2 => 'Barca a vela', 3 => 'Gommone'] @endphp
+    @if (session('message'))
+    @php
+        $message = session('message');
+    @endphp
+    <div class="alert-cont">
+        <div class="alert alert-dismissible fade show notify_success" role="alert">
+            {{$message}}
+            <button type="button" class="btn-close close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
+
     <div class="view_box pt-5">
         <div class="central">
-            <h1>Dettagli di <span>{{$player->nickname}}</span></h1>
+            <h1>Dettagli del cliente</h1>
         </div>
         <div class="box_container">
-            <div class="box personal">
-                <p>
-                    <strong>Nome</strong> <span>{{$player->name}}</span>
-                </p>
-                <p>
-                    <strong>Cognome</strong> <span>{{$player->surname}}</span>
-                </p>
-            </div>
             <div class="box contact ">
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
                         <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
                         <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
                     </svg>
-                    <span>{{$player->mail}}</span>
+                    <a href="mailto:{{$client->mail}}">{{$client->mail}}</a>
+
                 </div>
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
                     </svg>
-                    <a href="tel:{{$player->phone}}">{{$player->phone}}</a>
+                    <a href="tel:{{$client->phone}}">{{$client->phone}}</a>
                 </div>
                 
             </div>
-            <div class="box level_certificate1">
+            <div class="box personal">
+                <p>
+                    <strong>Nome</strong> <span>{{$client->name}}</span>
+                </p>
+                <p>
+                    <strong>Cognome</strong> <span>{{$client->surname}}</span>
+                </p>
+            </div>
+            <div class="box doc">
                 <div>
-                    <strong>Livello</strong> <span><strong>{{ $player->level}}</strong> / 5</span>
-                </div>
-                <div>
-                    <strong>Certificato medico</strong> 
-                    @if ($player->certificate)
-                        <a href="{{Storage::url($player->certificate)}}" target="_blank" rel="noopener noreferrer">Visualizza certificato</a>
+                    <strong>Documenti</strong> 
+                    @if ($client->certificate)
+                        <a href="{{Storage::url($client->certificate)}}" target="_blank" rel="noopener noreferrer">Visualizza certificato</a>
                     @else
-                        <span>Nessun certificato caricato</span>
+                        <span>Nessun documento caricato</span>
                     @endif
                 </div>
-            </div>
-            <div class="box note">
+            
                 <div>
                     <strong>Note</strong> 
                     <p>
-                        @if ($player->note)
-                            {{$player->note}}
+                        @if ($client->note)
+                            {{$client->note}}
                         @else
                             Nessuna nota
                         @endif
@@ -58,220 +69,100 @@
                 </div>
             </div>
         </div>
-        @if(count($player_reservations))  
-            <h2>Match prenotati da <strong> #{{$player->nickname}}</strong> </h2>
+        @if(count($client->reservations))  
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+        </svg>
+                Prenotazioni fatte da <strong>{{$client->name}} {{$client->surnname}}</strong> </h2>
         @else
-            <h2> <strong> #{{$player->nickname}}</strong> non ha prenotato ancona a nessun match</h2>
+            <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha prenotato nessuno slot</h2>
         @endif
-        <div class="newtable w-100">
-            @foreach ($player_reservations as $r)
+        <div class="info_box_day">
+            @foreach ($client->reservations as $r)
             @php
-                // Parsing della stringa
-                $datetime = Carbon\Carbon::parse($r->date_slot)->locale('it');
-
-                // Variabili separate
-                $data = $datetime->translatedFormat('D j M'); // es: giovedì 25 settembre
-                $ora = $datetime->format('H:i');              // es: 18:00
-                $ora_fine = $datetime->addHour()->addMinutes(30)->format('H:i'); // es: 19:00
+                $formatter = new IntlDateFormatter(
+                    'it_IT',
+                    IntlDateFormatter::NONE,
+                    IntlDateFormatter::NONE,
+                    null,
+                    null,
+                    'EEE dd MMM '
+                );
             @endphp
-                <div class="res_item">
-                    <div class="left">
-                        <div class="time_slot">{{$ora}}   
-                        <span class="second">{{$ora_fine}}
-                        </span>
-                        
-                    </div>
-                    <div class="date">{{$data}}</div>
-                    </div>
-                    <div class="center">
-                        <div>
-                            <span class="pl">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                </svg>
-                                {{count($r->players)}}</span>
-                            <span class="field">C {{$r->field}}</span>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        @php
-                            $dinner = json_decode($r->dinner, true);
-                        @endphp
-                        @if ($dinner['status'])
-                            <!-- Button trigger modal -->
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$r->id}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fork-knife" viewBox="0 0 16 16">
-                                    <path d="M13 .5c0-.276-.226-.506-.498-.465-1.703.257-2.94 2.012-3 8.462a.5.5 0 0 0 .498.5c.56.01 1 .13 1 1.003v5.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5zM4.25 0a.25.25 0 0 1 .25.25v5.122a.128.128 0 0 0 .256.006l.233-5.14A.25.25 0 0 1 5.24 0h.522a.25.25 0 0 1 .25.238l.233 5.14a.128.128 0 0 0 .256-.006V.25A.25.25 0 0 1 6.75 0h.29a.5.5 0 0 1 .498.458l.423 5.07a1.69 1.69 0 0 1-1.059 1.711l-.053.022a.92.92 0 0 0-.58.884L6.47 15a.971.971 0 1 1-1.942 0l.202-6.855a.92.92 0 0 0-.58-.884l-.053-.022a1.69 1.69 0 0 1-1.059-1.712L3.462.458A.5.5 0 0 1 3.96 0z"/>
-                                </svg>
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal{{$r->id}}" tabindex="-1" aria-labelledby="exampleModal{{$r->id}}Label" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <button type="button" class="btn_close" data-bs-dismiss="modal">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708z"/>
-                                                </svg>
-                                            </button>
-                                            <p>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                                                </svg>
-                                                <span>{{$dinner['guests']}}</span>
-                                            </p>
-                                            <p>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-                                                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
-                                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
-                                                    <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
-                                                </svg>
-                                                <span>{{ $dinner['time'] }}</span>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="no_dinner">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fork-knife" viewBox="0 0 16 16">
-                                    <path d="M13 .5c0-.276-.226-.506-.498-.465-1.703.257-2.94 2.012-3 8.462a.5.5 0 0 0 .498.5c.56.01 1 .13 1 1.003v5.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5zM4.25 0a.25.25 0 0 1 .25.25v5.122a.128.128 0 0 0 .256.006l.233-5.14A.25.25 0 0 1 5.24 0h.522a.25.25 0 0 1 .25.238l.233 5.14a.128.128 0 0 0 .256-.006V.25A.25.25 0 0 1 6.75 0h.29a.5.5 0 0 1 .498.458l.423 5.07a1.69 1.69 0 0 1-1.059 1.711l-.053.022a.92.92 0 0 0-.58.884L6.47 15a.971.971 0 1 1-1.942 0l.202-6.855a.92.92 0 0 0-.58-.884l-.053-.022a1.69 1.69 0 0 1-1.059-1.712L3.462.458A.5.5 0 0 1 3.96 0z"/>
-                                </svg>
-                            </div>
-                        @endif
-                        <a href="{{route('admin.reservations.edit', $r)}}" class="edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                            </svg>
-                        </a>
-                        <a href="{{route('admin.reservations.show', $r)}}" class="show">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                            </svg>
-                        </a>
-                    </div>
-
+            <div class="wrap_item">
+                <div class="top">
+                    <div class="name"></div>
+                    <div class="boat">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
+                        {{$r->boat->name}}</div>
                 </div>
+                <div class="item">
+                    <div class="slot">{{$r->slot->name}}</div>
+                    <div class="date">
+                        <p>Da <strong>{{$formatter->format($r->start_date)}}</strong></p>
+                        <p>A <strong>{{$formatter->format($r->end_date)}}</strong></p>
+                    </div>
+                    <div class="status">confermata</div>
+                    
+                </div>
+            </div>
             @endforeach
-
-                
         </div>
-        @if(count($player->reservations))
-            <h2>Match in cui <strong> #{{$player->nickname}}</strong> ha giocato</h2>
+
+        @if(count($client->boats))  
+            <h2 class="mt-5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
+                Imbarcazioni di <strong>{{$client->name}} {{$client->surnname}}</strong> </h2>
         @else
-            <h2> <strong> #{{$player->nickname}}</strong> non ha giocato ancona a nessun match</h2>
+            <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha ancora registrato imbarcazioni</h2>
         @endif
-        <div class="newtable w-100">
-            @foreach ($player->reservations as $r)
+        <div class="info_box_day">
+            @foreach ($client->boats as $b)
             @php
-                // Parsing della stringa
-                $datetime = Carbon\Carbon::parse($r->date_slot)->locale('it');
-
-                // Variabili separate
-                $data = $datetime->translatedFormat('D j M'); // es: giovedì 25 settembre
-                $ora = $datetime->format('H:i');              // es: 18:00
-                $ora_fine = $datetime->addHour()->addMinutes(30)->format('H:i'); // es: 19:00
+                $formatter = new IntlDateFormatter(
+                    'it_IT',
+                    IntlDateFormatter::NONE,
+                    IntlDateFormatter::NONE,
+                    null,
+                    null,
+                    'EEE dd MMM'
+                );
             @endphp
-                <div class="res_item">
-                    <div class="left">
-                        <div class="time_slot">{{$ora}}   
-                        <span class="second">{{$ora_fine}}
-                        </span>
-                        
-                    </div>
-                    <div class="date">{{$data}}</div>
-                    </div>
-                    <div class="center">
-                        <div>
-                            <span class="pl">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                </svg>
-                                {{count($r->players)}}</span>
-                            <span class="field">C {{$r->field}}</span>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        @php
-                            $dinner = json_decode($r->dinner, true);
-                        @endphp
-                        @if ($dinner['status'])
-                            <!-- Button trigger modal -->
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$r->id}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fork-knife" viewBox="0 0 16 16">
-                                    <path d="M13 .5c0-.276-.226-.506-.498-.465-1.703.257-2.94 2.012-3 8.462a.5.5 0 0 0 .498.5c.56.01 1 .13 1 1.003v5.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5zM4.25 0a.25.25 0 0 1 .25.25v5.122a.128.128 0 0 0 .256.006l.233-5.14A.25.25 0 0 1 5.24 0h.522a.25.25 0 0 1 .25.238l.233 5.14a.128.128 0 0 0 .256-.006V.25A.25.25 0 0 1 6.75 0h.29a.5.5 0 0 1 .498.458l.423 5.07a1.69 1.69 0 0 1-1.059 1.711l-.053.022a.92.92 0 0 0-.58.884L6.47 15a.971.971 0 1 1-1.942 0l.202-6.855a.92.92 0 0 0-.58-.884l-.053-.022a1.69 1.69 0 0 1-1.059-1.712L3.462.458A.5.5 0 0 1 3.96 0z"/>
-                                </svg>
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal{{$r->id}}" tabindex="-1" aria-labelledby="exampleModal{{$r->id}}Label" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <button type="button" class="btn_close" data-bs-dismiss="modal">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708z"/>
-                                                </svg>
-                                            </button>
-                                            <p>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                                                </svg>
-                                                <span>{{$dinner['guests']}}</span>
-                                            </p>
-                                            <p>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-                                                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
-                                                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
-                                                    <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
-                                                </svg>
-                                                <span>{{ $dinner['time'] }}</span>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="no_dinner">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fork-knife" viewBox="0 0 16 16">
-                                    <path d="M13 .5c0-.276-.226-.506-.498-.465-1.703.257-2.94 2.012-3 8.462a.5.5 0 0 0 .498.5c.56.01 1 .13 1 1.003v5.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5zM4.25 0a.25.25 0 0 1 .25.25v5.122a.128.128 0 0 0 .256.006l.233-5.14A.25.25 0 0 1 5.24 0h.522a.25.25 0 0 1 .25.238l.233 5.14a.128.128 0 0 0 .256-.006V.25A.25.25 0 0 1 6.75 0h.29a.5.5 0 0 1 .498.458l.423 5.07a1.69 1.69 0 0 1-1.059 1.711l-.053.022a.92.92 0 0 0-.58.884L6.47 15a.971.971 0 1 1-1.942 0l.202-6.855a.92.92 0 0 0-.58-.884l-.053-.022a1.69 1.69 0 0 1-1.059-1.712L3.462.458A.5.5 0 0 1 3.96 0z"/>
-                                </svg>
-                            </div>
-                        @endif
-                        <a href="{{route('admin.reservations.edit', $r)}}" class="edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                            </svg>
-                        </a>
-                        <a href="{{route('admin.reservations.show', $r)}}" class="show">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                            </svg>
-                        </a>
-                    </div>
-
+            <div class="wrap_item">
+                <div class="top">
+                    <div class="client">ID: {{$b->serial_code}}</div> <div class="boat">{{$b->model}}</div>
                 </div>
+                <div class="item">
+                    <div class="slot">{{$b->name}}</div>
+                    <div class="date">
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16"><path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z"/></svg> Loa:  <strong>{{$b->loa}} cm</strong></p>
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Beam: <strong>{{$b->beam}} cm</strong></p>
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Draft: <strong>{{$b->draft}} cm</strong></p>
+                    </div>
+    
+                    <div class="status">{{$type[$b->type]}}</div>
+                    
+                </div>
+            </div>
             @endforeach
-
-                
         </div>
+
+        <button class="my_btn_5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Aggiungi imbarcazione
+        </button>
+     
 
         <div class="more_info my-3" >
             <p>
-                <strong>Creato il</strong> {{$player->created_at->format('d/m/Y')}},
-                <strong>Aggiornato il</strong> {{$player->updated_at->format('d/m/Y')}}
+                <strong>Creato il</strong> {{$client->created_at->format('d/m/Y')}},
+                <strong>Aggiornato il</strong> {{$client->updated_at->format('d/m/Y')}}
             </p>
         </div>
 
         <div class="action_page">
-            <a class="my_btn_7" href="{{ route('admin.players.edit', $player) }}">
+            <a class="my_btn_7" href="{{ route('admin.clients.edit', $client) }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -284,7 +175,106 @@
 
                 
         </div>
-        <!-- Modal -->
+        
+        <!-- Modal add boat -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"  action="{{ route('admin.boats.store') }}"  enctype="multipart/form-data"  method="POST">
+                <div class="modal-content mymodal_make_res creation">
+                    <form action="{{ route('admin.boats.store') }}"  enctype="multipart/form-data"  method="POST">
+                        @method('POST')
+                        @csrf
+                        <input type="hidden" name="client_id" value="{{$client->id}}">
+                        <section class="modal-body">
+                            <div class="top">
+                                <h2 id="cancelModalLabel">Aggiungi un imbarcazione</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="split">    
+                                <div>
+                                    <label class="label_c" for="name">
+                                        Nome
+                                    </label>
+                                    <p>
+                                        <input value="{{ old('name') }}" type="text" name="name" id="name" placeholder="Inserisci il nome">
+                                    </p>
+                                    @error('name') <p class="error">{{ $message }}</p> @enderror
+                                </div>  
+                                <div>
+                                    <label class="label_c" for="model">
+                                        Modello
+                                    </label>
+                                    <p>
+                                        <input value="{{ old('model') }}" type="text" name="model" id="model" placeholder="Inserisci il telefono">
+                                    </p>
+                                    @error('model') <p class="error">{{ $message }}</p> @enderror
+                                </div>      
+                                   
+                            </div>
+                            <div class="split">          
+                                <div>
+                                    <label class="label_c" for="loa">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16"><path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z"/></svg> Loa:
+                                    </label>
+                                    <p>
+                                        <input value="{{ old('loa') }}" type="number" name="loa" id="loa" placeholder="Inserisci la LOA">
+                                    </p>
+                                    @error('loa') <p class="error">{{ $message }}</p> @enderror
+                                </div>        
+                                <div>
+                                    <label class="label_c" for="draft">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Draft:
+                                    </label>
+                                    <p>
+                                        <input value="{{ old('draft') }}" type="number" name="draft" id="draft" placeholder="Inserisci il pescaggio">
+                                    </p>
+                                    @error('draft') <p class="error">{{ $message }}</p> @enderror
+                                </div>        
+                            </div>
+                            <div class="split">          
+                                <div>
+                                    <label class="label_c" for="beam">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Beam:
+                                    </label>
+                                    <p>
+                                        <input value="{{ old('beam') }}" type="number" name="beam" id="beam" placeholder="Inserisci la larghezza">
+                                    </p>
+                                    @error('beam') <p class="error">{{ $message }}</p> @enderror
+                                </div>        
+                                <div>
+                                    <label class="label_c" for="type">
+                                        Tipologia
+                                    </label>
+                                    <p>
+                                        <select id="type" name="type" >                        
+                                            @foreach ($type as $k => $t)
+                                                <option value="{{ $k }}" >{{ $t }}</option>
+                                            @endforeach
+                                        </select>
+                                        
+                                    </p>
+                                    @error('type') <p class="error">{{ $message }}</p> @enderror
+                                </div>        
+                            </div>
+                            <div class="p">                
+                                <div>
+                                    <label class="label_c w-100" for="serial_code">
+                                        N. immatricolazione 
+                                    </label>
+                                    <p>
+                                        <input class="w-100" value="{{ old('serial_code') }}" type="text" name="serial_code" id="serial_code" placeholder="Inserisci il n. immatricolazione ">
+                                    </p>
+                                    @error('serial_code') <p class="error">{{ $message }}</p> @enderror
+                                </div>         
+                            </div>
+                            <div class="actions">
+                                <button class="my_btn_3 mb-3"  type="submit">Conferma</button>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="exampleModaldelete" tabindex="-1" aria-labelledby="exampleModaldeleteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -294,8 +284,8 @@
                             <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708z"/>
                             </svg>
                         </button>
-                        <h3>Sei sicuro di voler eliminare il giocatore "{{$player->name}}" ?</h3>
-                        <form class="w-100" action="{{ route('admin.players.destroy', ['player'=>$player]) }}" method="post" >
+                        <h3>Sei sicuro di voler eliminare il giocatore "{{$client->name}}" ?</h3>
+                        <form class="w-100" action="{{ route('admin.clients.destroy', ['client'=>$client]) }}" method="post" >
                             @method('delete')
                             @csrf
                             <button class="my_btn_1 btn_delete m-auto" type="submit">Elimina</button>

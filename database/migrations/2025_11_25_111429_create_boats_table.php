@@ -24,6 +24,7 @@ return new class extends Migration
             $table->mediumInteger('loa');
             $table->mediumInteger('draft');
             $table->mediumInteger('beam');
+            $table->string('model');//barca a motore, vela , gommone
             $table->string('type', 2);//barca a motore, vela , gommone
             $table->string('serial_code', 50);
 

@@ -39,6 +39,18 @@ class ClientController extends Controller
         return view('admin.Clients.create');
     }
 
+    public function changeStatus(Request $request){
+        $client = Client::findOrFail($request['id']);
+        if($client->status == 0){
+            $client->status = 1;
+            $m = 'Il cliente "' . $client->surname . '" è stato attivato correttamente';
+        }else{
+            $client->status = 0;
+            $m = 'Il cliente "' . $client->surname . '" è stato disattivato correttamente'; 
+        }
+        $client->update();
+        return to_route('admin.clients.index')->with('message', $m);      
+    }
     public function store(Request $request)
     {
         $data = $request->all();
@@ -113,11 +125,11 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
         
         // stacca tutte le associazioni con le reservations
-        $client->reservations()->detach();
-        $client->boat()->detach();
+        $client->reservations()->delete();
+        $client->boats()->delete();
         $client->delete();
 
-        $m = 'Il giocatore "' . $client->nickname . '" è stato eliminato correttamente';
+        $m = 'Il cliente  "' . $client->name . ' ' . $client->name . ' è stato eliminato correttamente';
         return to_route('admin.clients.index')->with('message', $m);      
     }
 }

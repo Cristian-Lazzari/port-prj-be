@@ -101,7 +101,7 @@
         </div>
     </div>
 
-    <div id="day-info" class="info_box_day">
+    <div id="day-info" class="info_box_day mt-5 pt-5">
         {{-- <div class="box">
             <div class="wrap_item">
                 <div class="top">
@@ -147,7 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Creiamo il contenuto dinamico
             let html = `
-                <h3>${dayData.day} - ${dayData.month} - ${dayData.year}</h3>
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                    </svg>
+                    ${dayData.day} - ${dayData.month} - ${dayData.year}</h3>
                     `;
 
             // ARRIVI
@@ -160,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     html += `
                     <div class="wrap_item">
                         <div class="top">
-                            <div class="client">${r.client.name} ${r.client.surname}</div> <div class="boat">${r.boat.name}</div>
+                            <div class="client">${r.client.name} ${r.client.surname}</div> <div class="boat"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg> ${r.boat.name}</div>
                         </div>
                         <div class="item">
                             <div class="slot">${r.slot.name}</div>
@@ -184,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     html += `
                     <div class="wrap_item">
                         <div class="top">
-                            <div class="client">${r.client.name} ${r.client.surname}</div> <div class="boat">${r.boat.name}</div>
+                            <div class="client">${r.client.name} ${r.client.surname}</div> <div class="boat"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg> ${r.boat.name}</div>
                         </div>
                         <div class="item">
                             <div class="slot">${r.slot.name}</div>

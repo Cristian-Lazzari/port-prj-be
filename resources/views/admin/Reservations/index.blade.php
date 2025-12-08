@@ -70,7 +70,7 @@
         @endphp
             <div class="wrap_item">
                 <div class="top">
-                    <div class="client">{{$r->client->name}} {{$r->client->surname}}</div> <div class="boat">{{$r->boat->name}}</div>
+                    <div class="client">{{substr($r->client->name, 0, 1)}}. {{$r->client->surname}}</div> <div class="boat">{{$r->boat->name}}</div>
                 </div>
                 <div class="item">
                     <div class="slot">{{$r->slot->name}}</div>
