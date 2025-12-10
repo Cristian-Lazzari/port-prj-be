@@ -70,11 +70,8 @@
             </div>
         </div>
         @if(count($client->reservations))  
-            <h2>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-        </svg>
+            <h2 class="mt-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16"><path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zm4-1v1h1v-1zm1 3v-1H4v1zm7 0v-1h-1v1zm-1-2h1v-1h-1zm-6 3H4v1h1zm7 1v-1h-1v1zm-7 1H4v1h1zm7 1v-1h-1v1zm-8 1v1h1v-1zm7 1h1v-1h-1z"/></svg>
                 Prenotazioni fatte da <strong>{{$client->name}} {{$client->surnname}}</strong> </h2>
         @else
             <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha prenotato nessuno slot</h2>
@@ -118,6 +115,7 @@
         @else
             <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha ancora registrato imbarcazioni</h2>
         @endif
+        {{-- barche elenco --}}
         <div class="info_box_day">
             @foreach ($client->boats as $b)
             @php
@@ -132,7 +130,14 @@
             @endphp
             <div class="wrap_item">
                 <div class="top">
-                    <div class="client">ID: {{$b->serial_code}}</div> <div class="boat">{{$b->model}}</div>
+                    <div class="client">ID: {{$b->serial_code}}</div>
+                    <div class="boat">{{$b->model}}</div>
+                    <button class="my_btn_6 btn_delete" type="button" data-bs-toggle="modal" data-bs-target="#show{{$b->id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/></svg>
+                    </button>
+                    <button class="my_btn_6" type="button" data-bs-toggle="modal" data-bs-target="#delete{{$b->id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>
+                    </button>
                 </div>
                 <div class="item">
                     <div class="slot">{{$b->name}}</div>
@@ -145,6 +150,202 @@
                     <div class="status">{{$type[$b->type]}}</div>
                     
                 </div>
+                
+                <!-- delelete edit boat -->
+                <div class="modal fade" id="delete{{$b->id}}" tabindex="-1" aria-labelledby="delete{{$b->id}}Label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered"  action="{{ route('admin.boats.store') }}"  enctype="multipart/form-data"  method="POST">
+                        <div class="modal-content mymodal_make_res creation">
+                            <form action="{{ route('admin.boats.update', $b) }}"  enctype="multipart/form-data"  method="POST">
+                                @method('PUT')
+                                @csrf
+                                <section class="modal-body">
+                                    <div class="top">
+                                        <h2 id="cancelModalLabel">Modifica "{{$b->name}}"</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="split">    
+                                        <div>
+                                            <label class="label_c" for="name">
+                                                Nome
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('name', $b->name) }}" type="text" name="name" id="name" placeholder="Inserisci il nome">
+                                            </p>
+                                            @error('name') <p class="error">{{ $message }}</p> @enderror
+                                        </div>  
+                                        <div>
+                                            <label class="label_c" for="model">
+                                                Modello
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('model', $b->model) }}" type="text" name="model" id="model" placeholder="Inserisci il telefono">
+                                            </p>
+                                            @error('model') <p class="error">{{ $message }}</p> @enderror
+                                        </div>      
+                                        
+                                    </div>
+                                    <div class="split">          
+                                        <div>
+                                            <label class="label_c" for="loa">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16"><path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z"/></svg> Loa:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('loa', $b->loa) }}" type="number" name="loa" id="loa" placeholder="Inserisci la LOA">
+                                            </p>
+                                            @error('loa') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                        <div>
+                                            <label class="label_c" for="draft">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Draft:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('draft', $b->draft) }}" type="number" name="draft" id="draft" placeholder="Inserisci il pescaggio">
+                                            </p>
+                                            @error('draft') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                    </div>
+                                    <div class="split">          
+                                        <div>
+                                            <label class="label_c" for="beam">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Beam:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('beam', $b->beam) }}" type="number" name="beam" id="beam" placeholder="Inserisci la larghezza">
+                                            </p>
+                                            @error('beam') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                        <div>
+                                            <label class="label_c" for="type">
+                                                Tipologia
+                                            </label>
+                                            <p>
+                                                <select id="type" name="type" >                        
+                                                    @foreach ($type as $k => $t)
+                                                        <option value="{{ $k }}" @if ($b->type == $k) selected  @endif>{{ $t }}</option>
+                                                    @endforeach
+                                                </select>
+                                                
+                                            </p>
+                                            @error('type') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                    </div>
+                                    <div class="p">                
+                                        <div>
+                                            <label class="label_c w-100" for="serial_code">
+                                                N. immatricolazione 
+                                            </label>
+                                            <p>
+                                                <input class="w-100" value="{{ old('serial_code', $b->serial_code) }}" type="text" name="serial_code" id="serial_code" placeholder="Inserisci il n. immatricolazione ">
+                                            </p>
+                                            @error('serial_code') <p class="error">{{ $message }}</p> @enderror
+                                        </div>         
+                                    </div>
+                                    <div class="actions">
+                                        <button class="my_btn_3 mb-3"  type="submit">Conferma</button>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- Modal edit boat -->
+                <div class="modal fade" id="show{{$b->id}}" tabindex="-1" aria-labelledby="show{{$b->id}}Label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered"  action="{{ route('admin.boats.store') }}"  enctype="multipart/form-data"  method="POST">
+                        <div class="modal-content mymodal_make_res creation">
+                            <form action="{{ route('admin.boats.update', $b) }}"  enctype="multipart/form-data"  method="POST">
+                                @method('PUT')
+                                @csrf
+                                <section class="modal-body">
+                                    <div class="top">
+                                        <h2 id="cancelModalLabel">Modifica "{{$b->name}}"</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="split">    
+                                        <div>
+                                            <label class="label_c" for="name">
+                                                Nome
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('name', $b->name) }}" type="text" name="name" id="name" placeholder="Inserisci il nome">
+                                            </p>
+                                            @error('name') <p class="error">{{ $message }}</p> @enderror
+                                        </div>  
+                                        <div>
+                                            <label class="label_c" for="model">
+                                                Modello
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('model', $b->model) }}" type="text" name="model" id="model" placeholder="Inserisci il telefono">
+                                            </p>
+                                            @error('model') <p class="error">{{ $message }}</p> @enderror
+                                        </div>      
+                                        
+                                    </div>
+                                    <div class="split">          
+                                        <div>
+                                            <label class="label_c" for="loa">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16"><path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708z"/></svg> Loa:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('loa', $b->loa) }}" type="number" name="loa" id="loa" placeholder="Inserisci la LOA">
+                                            </p>
+                                            @error('loa') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                        <div>
+                                            <label class="label_c" for="draft">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Draft:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('draft', $b->draft) }}" type="number" name="draft" id="draft" placeholder="Inserisci il pescaggio">
+                                            </p>
+                                            @error('draft') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                    </div>
+                                    <div class="split">          
+                                        <div>
+                                            <label class="label_c" for="beam">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Beam:
+                                            </label>
+                                            <p>
+                                                <input value="{{ old('beam', $b->beam) }}" type="number" name="beam" id="beam" placeholder="Inserisci la larghezza">
+                                            </p>
+                                            @error('beam') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                        <div>
+                                            <label class="label_c" for="type">
+                                                Tipologia
+                                            </label>
+                                            <p>
+                                                <select id="type" name="type" >                        
+                                                    @foreach ($type as $k => $t)
+                                                        <option value="{{ $k }}" @if ($b->type == $k) selected  @endif>{{ $t }}</option>
+                                                    @endforeach
+                                                </select>
+                                                
+                                            </p>
+                                            @error('type') <p class="error">{{ $message }}</p> @enderror
+                                        </div>        
+                                    </div>
+                                    <div class="p">                
+                                        <div>
+                                            <label class="label_c w-100" for="serial_code">
+                                                N. immatricolazione 
+                                            </label>
+                                            <p>
+                                                <input class="w-100" value="{{ old('serial_code', $b->serial_code) }}" type="text" name="serial_code" id="serial_code" placeholder="Inserisci il n. immatricolazione ">
+                                            </p>
+                                            @error('serial_code') <p class="error">{{ $message }}</p> @enderror
+                                        </div>         
+                                    </div>
+                                    <div class="actions">
+                                        <button class="my_btn_3 mb-3"  type="submit">Conferma</button>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             @endforeach
         </div>
@@ -152,7 +353,6 @@
         <button class="my_btn_5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Aggiungi imbarcazione
         </button>
-     
 
         <div class="more_info my-3" >
             <p>
@@ -284,7 +484,7 @@
                             <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708z"/>
                             </svg>
                         </button>
-                        <h3>Sei sicuro di voler eliminare il giocatore "{{$client->name}}" ?</h3>
+                        <h3>Sei sicuro di voler eliminare il Cliente "{{$client->name}}" ?</h3>
                         <form class="w-100" action="{{ route('admin.clients.destroy', ['client'=>$client]) }}" method="post" >
                             @method('delete')
                             @csrf
