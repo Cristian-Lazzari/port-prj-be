@@ -728,7 +728,9 @@ body{
         .date{
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            flex-direction: column;
+            gap: .2rem;
+            font-size: $fs_sm_1;
             flex: 1 1;
             p{
                 line-height: $fs_sm;
@@ -736,6 +738,7 @@ body{
             }
         }
         .status{
+            border: none;
             background-color: var(--c1);
             color: var(--c3);
             padding: .3rem .7rem;
@@ -743,13 +746,12 @@ body{
             white-space: nowrap;
             font-size: $fs_sm;
             font-weight: 700;
-            margin-left: auto;
+            margin-left:  auto;
         }
         .actions{
             display: flex;
             gap: .3rem;
             justify-content: flex-end;
-            margin-left: auto;
             a{
                 background-color: var(--c1);
                 padding: .8rem;

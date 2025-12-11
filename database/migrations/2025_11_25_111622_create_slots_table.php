@@ -21,7 +21,7 @@ return new class extends Migration
             $table->mediumInteger('beam');
             $table->mediumInteger('draft');
             $table->mediumInteger('price');
-            $table->text('type')->nullable();
+            $table->tinyInteger('type')->nullable();
 
             $table->timestamps();
         });

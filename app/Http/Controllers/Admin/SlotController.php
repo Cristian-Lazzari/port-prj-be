@@ -8,79 +8,80 @@ use App\Http\Controllers\Controller;
 
 class SlotController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $validations = [
+        'name'      => 'required|string',
+        'loa'       => 'required',
+        'draft'     => 'required',
+        'beam'      => 'required',
+        'price'     => 'required',
+    ];
     public function index()
     {
         $slots = Slot::with('reservations')->orderBy('created_at', 'desc')->get();
 
         return view('admin.Slots.index', compact('slots'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
-        //
+        return view('admin.Slots.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        $data = $request->all(); 
+        $request->validate($this->validations);
+
+        
+        $slot = new Slot();
+
+        $slot->name = $data['name'];
+        $slot->loa = $data['loa'];
+        $slot->draft = $data['draft'];
+        $slot->beam = $data['beam'];
+        $slot->type = $data['type'];
+        $slot->price = $data['price'];
+
+        
+        $slot->save();
+        
+
+        
+        $m = 'Lo slot "' . $data['name'] . '" è stato registrato correttamente';
+
+        if (isset($data['add_new'])) {
+            $m = 'Lo slot "' . $data['name'] . '" è stato registrato correttamente. Puoi aggiungerne un altro';
+            return to_route('admin.slots.create')->with('create_success', $m);      
+        }
+        
+        $m = 'Lo slot "' . $data['name'] . '" è stato registrato correttamente';
+        return to_route('admin.slots.index')->with('message', $m);   
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //
