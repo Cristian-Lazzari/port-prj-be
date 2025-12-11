@@ -127,7 +127,8 @@ class BoatController extends Controller
         $bot = Boat::findOrFail($id);
         $bot->delete();
 
-        return response()->json(['message' => 'Barca eliminata con successo.']);
+        $m = 'L\'imbarcazione "' . $bot->name . '" è stata eliminata definitivamente';
+        return back()->with('message', $m);    
     }
 
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Slot;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SlotController extends Controller
 {
@@ -14,7 +15,9 @@ class SlotController extends Controller
      */
     public function index()
     {
-        //
+        $slots = Slot::with('reservations')->orderBy('created_at', 'desc')->get();
+
+        return view('admin.Slots.index', compact('slots'));
     }
 
     /**

@@ -258,6 +258,7 @@ html{
             filter: drop-shadow(0 0 3px var(--c2_op));
             height: $svg_n;
             width: $svg_n;
+            fill: var(--c3);
             padding: 3px;
         }
     }
@@ -278,7 +279,7 @@ html{
         align-items: center;
         font-weight: 900;
         svg{
-            color: var(--c1);
+            fill: var(--c1);
 
         }
     }
