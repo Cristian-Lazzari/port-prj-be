@@ -33,57 +33,15 @@
                         @php
                             $property_adv = json_decode($settings['advanced']['property'], true);
                         @endphp
-                        <div class="input-group my-3">
-                            <label class="input-group-text" id="max_delay_default">Min. H per cancellazione</label>
-                            <input type="number" class="form-control"  name="max_delay_default" value="{{$property_adv['max_delay_default']}}">
-                        </div>
-                        <div class="input-group my-3">
-                            <label class="input-group-text" id="delay_trainer">H. per liberare il campo</label>
-                            <input type="number" class="form-control"  name="delay_trainer" value="{{$property_adv['delay_trainer'] ?? ''}}">
-                        </div>
+
                     </div>
 
-                </div>
-         
-
-                @php
-                    $settings['Periodo di Ferie']['property'] = json_decode($settings['Periodo di Ferie']['property'], true);
-                @endphp
-                <div class="set">
-                    <h4>Ferie</h4>
-                    <div class="sets">
-                        <div class="radio-inputs">
-                            <label class="radio">
-                                <input type="radio" name="ferie_status"  @if($settings['Periodo di Ferie']['status'] == 0) checked  @endif value="0" >
-                                <span class="name">A lavoro</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="ferie_status"  @if($settings['Periodo di Ferie']['status'] == 1) checked  @endif value="1" >
-                                <span class="name">In ferie</span>
-                            </label>
-                        </div>
-                        
-                        <div class="input-group flex-nowrap">
-                            <label for="form" class="input-group-text" >Da</label>
-                            <input name="from" id="form" type="date" class="form-control" placeholder="da" @if($settings['Periodo di Ferie']['property']['from'] !== '') value="{{$settings['Periodo di Ferie']['property']['from']}}"  @endif>
-                            <label for="to" class="input-group-text" >A</label>
-                            <input name="to" id="to" type="date" class="form-control" placeholder="da" @if($settings['Periodo di Ferie']['property']['to'] !== '') value="{{$settings['Periodo di Ferie']['property']['to']}}"  @endif>
-                        </div>
-                    </div>
-                </div>
-                
-
-                    
+                </div>                    
             </div>
             <div class="bottom-set">
                 @php 
                     $property_contatti = json_decode($settings['Contatti']['property'], true);
-                    $field_set = json_decode($settings['advanced']['property'], true)['field_set'];
-                    $trainer_set = json_decode($settings['advanced']['property'], true)['trainer_set'] ?? [];
-                    $this_trainer = $trainer_set[auth()->user()->id] ?? [];
-                    $this_trainer_field = $this_trainer['field'] ?? 0;
-                    $this_trainer_field_set = $field_set[$this_trainer_field] ?? [];
-
+                    $property_posizione = json_decode($settings['Posizione']['property'], true);
                 @endphp
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item"> 
@@ -147,168 +105,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item"> 
+                    <div class="accordion-item">
                         <h4 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseField" aria-expanded="false" aria-controls="flush-collapseField">
-                                Impostazioni campi
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Posizione del Porto
                             </button>
                         </h4>
-                        <div id="flush-collapseField" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body cont_field">
-                                <div class="cont">
-                                    @foreach ($field_set as $k => $f) 
-                                        <section class="">
-                                            <div class="top">
-                                                <div class="name_field">{{$k}} - {{$f['type']}}</div>
-                                                <div class="btn-group dropup">
-                                                    <button type="button" class="my_btn_1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                                                        </svg>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <div class="body">
-                                                            <div class="btn delete">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill " viewBox="0 0 16 16">
-                                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="field_set[{{$k}}][name_field]" value="{{$k}}">
-                                            <input type="hidden" name="field_set[{{$k}}][type]" value="{{$f['type']}}">
-                                            <div class="my_input_group">
-                                                <label for="{{$f['h_start']}}" class="input-group-text">Apertura</label>
-                                                <input type="text" id="{{$f['h_start']}}" class="form-control" name="field_set[{{$k}}][h_start]" value="{{$f['h_start']}}">
-                                            </div>
-                                            <div class="my_input_group">
-                                                <label for="{{$f['m_during']}}" class="input-group-text">Durata minima</label>
-                                                <input type="text" id="{{$f['m_during']}}" class="form-control" name="field_set[{{$k}}][m_during]" value="{{$f['m_during']}}">
-                                            </div>
-                                            <div class="my_input_group">
-                                                <label for="{{$f['m_during_client']}}" class="input-group-text">Durata slot cliente</label>
-                                                <input type="text" id="{{$f['m_during_client']}}" class="form-control" name="field_set[{{$k}}][m_during_client]" value="{{$f['m_during_client']}}">
-                                            </div>
-                                            <div class="my_input_group">
-                                                <label for="{{$f['n_slot']}}" class="input-group-text">N slot</label>
-                                                <input type="text" id="{{$f['n_slot']}}" class="form-control" name="field_set[{{$k}}][n_slot]" value="{{$f['n_slot']}}">
-                                            </div>
-                                            <h3 >Giorni di chiusura</h3>
-                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                                @php
-                                                    $week = [
-                                                        'Lunedì' => 1,
-                                                        'Martedì' => 2,
-                                                        'Mercoledì' => 3,
-                                                        'Giovedì' => 4,
-                                                        'Venerdì' => 5,
-                                                        'Sabato' => 6,
-                                                        'Domenica' => 7,
-                                                    ]
-                                                @endphp     
-                                                @foreach ($week as $kw => $v) 
-                                                    <input type="checkbox" class="btn-check"
-                                                        name="field_set[{{$k}}][closed_days][]" id="btncheck{{$k}}_{{$v}}_{{$kw}}"
-                                                        value="{{$v}}"
-                                                        autocomplete="off" 
-                                                        @if(in_array($v, $f['closed_days'])) checked @endif
-                                                        >
-                                                    <label class="btn btn-outline-danger" for="btncheck{{$k}}_{{$v}}_{{$kw}}">{{$kw}}</label>
-                                                @endforeach
-                                            </div>
-                                        </section>
-                                    @endforeach
-                                </div>
-                                <div class="my_btn_7 my-2 " id="addFieldBtn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                    </svg>
-                                    Nuovo campo</div>  
-                                <div class="cont" id="container"></div>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <section>
+
+                                    @if(isset($property_posizione["foto_maps"]) && $property_posizione['foto_maps'] !== "")
+                                        <img class="w-100 rounded mb-2" src="{{ asset('public/storage/' . $property_posizione['foto_maps']) }}" alt="{{ $property_posizione['foto_maps'] }}">
+                                    @endif
+                                    <div class="input-group ">    
+                                        <input type="file" id="file-input" name="foto_maps">
+                                    </div>
+                                    <div class="input-group ">
+                                        <label class="input-group-text" id="basic-addon1">Link Google Maps</label>
+                                        <input type="text" class="form-control"  name="link_maps" @if($property_posizione) value="{{ $property_posizione['link_maps'] }}" @endif>
+                                    </div>
+                                    <div class="input-group ">
+                                        <label class="input-group-text" id="basic-addon1">Indirizzo</label>
+                                        <input type="text" class="form-control"  name="indirizzo" @if($property_posizione) value="{{ $property_posizione['indirizzo'] }}" @endif>
+                                    </div>          
+                                </section>
+                            
                             </div>
                         </div>
                     </div>
-                    @if (auth()->user()->role == 'trainer')            
-                        <div class="accordion-item"> 
-                            <h4 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseset" aria-expanded="false" aria-controls="flush-collapseset">
-                                    Orari allenatori
-                                </button>
-                            </h4>
-                            <div id="flush-collapseset" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body cont_field">
-                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                        @foreach ($field_set as $k => $f) 
-                                            <input type="radio" class="btn-check"
-                                                name="set_trainer[field]" id="check{{$k}}"
-                                                value="{{$k}}"
-                                                autocomplete="off" 
-                                                @if($this_trainer !== [] && $this_trainer['field'] == $k) checked @endif
-                                                data-h_start="{{ $f['h_start'] }}"
-                                                data-n_slot="{{ $f['n_slot'] }}"
-                                                data-m_during_client="{{ $f['m_during_client'] }}"
-                                            >
-                                            <label class="btn btn-outline-dark" for="check{{$k}}">{{$k}}</label>
-                                        @endforeach
-                                    </div>
-                                    <div class="cont">
-                                        <section>
-                                            <div class="my_input_group">
-                                                <label for="h_start_trainer" class="input-group-text">Inizio</label>
-                                                <select id="h_start_trainer" class="form-control" name="set_trainer[h_start]" >
-                                                    @if ($this_trainer !== [])
-                                                        @php $hour_option_1 = Carbon\Carbon::createFromFormat('H:i', $this_trainer_field_set['h_start']); @endphp
-                                                        @for ($i = 0; $i < $this_trainer_field_set['n_slot']; $i++)
-                                                            <option value="{{ $hour_option_1->copy()->format('H:i') }}" @if($this_trainer['h_start'] == $hour_option_1->copy()->format('H:i')) selected @endif>{{ $hour_option_1->copy()->format('H:i') }}</option>
-                                                            @php $hour_option_1->addMinutes($this_trainer_field_set['m_during_client']); @endphp
-                                                        @endfor
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <div class="my_input_group">
-                                                <label for="h_end_trainer" class="input-group-text">Fine</label>
-                                                <select id="h_end_trainer" class="form-control" name="set_trainer[h_end]" >
-                                                    @if ($this_trainer !== [])
-                                                        @php $hour_option_2 = Carbon\Carbon::createFromFormat('H:i', $this_trainer_field_set['h_start'])->addMinutes($this_trainer_field_set['m_during_client']); @endphp
-                                                        @for ($i = 0; $i < ($this_trainer_field_set['n_slot']- 1); $i++)
-                                                            <option value="{{ $hour_option_2->copy()->format('H:i') }}" @if($this_trainer['h_end'] == $hour_option_2->copy()->format('H:i')) selected @endif>{{ $hour_option_2->copy()->format('H:i') }}</option>
-                                                            @php $hour_option_2->addMinutes($this_trainer_field_set['m_during_client']); @endphp
-                                                        @endfor
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </section>
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                        @php
-                                            $week = ['Lunedì' => 1,'Martedì' => 2,'Mercoledì' => 3,'Giovedì' => 4,'Venerdì' => 5,'Sabato' => 6,'Domenica' => 7, ]
-                                        @endphp     
-                                        @foreach ($week as $kw => $v) 
-                                            <input type="checkbox" class="btn-check"
-                                                name="set_trainer[day_w][]" id="check{{$kw}}"
-                                                @if($this_trainer !== [] && in_array($v, $this_trainer['day_w'])) checked @endif
-                                                value="{{$v}}"
-                                                autocomplete="off" 
-                                                >
-                                            <label class="btn btn-outline-dark" for="check{{$kw}}">{{$kw}}</label>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                   
 
                 </div>
-                @error('set_trainer.h_end')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-
+                
             </div>
-            <a  href="{{route('admin.players.trainer_register')}}" class="ml-auto my_btn_4 mb-4  mt-4">
-                Registra un allenatore
-            </a>
+            
             <button type="submit" class="my_btn_1  w-75 m-auto">Aggiorna</button> 
 
         </form>
@@ -316,265 +147,6 @@
 </div>
 
 
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('container');
-    const addBtn = document.getElementById('addFieldBtn');
-    let counter = 0;
-
-    addBtn.addEventListener('click', () => {
-        counter++;
-
-        // Crea la section principale
-        let counter_name = 'NewField_' + counter;
-
-        const section = document.createElement('section');
-
-
-        // Funzione per creare un gruppo label + input
-        const createInputGroup = (labelText, name, type, placeholder = '') => {
-            const id = `${name}_${counter}`;
-
-            const div = document.createElement('div');
-            div.classList.add('my_input_group');
-
-            const label = document.createElement('label');
-            label.setAttribute('for', id);
-            label.classList.add('input-group-text');
-            label.textContent = labelText;
-
-            const input = document.createElement('input');
-            input.type = type;
-            input.name = `field_set[${counter_name}][${name}]`;
-            input.id = id;
-            input.placeholder = placeholder;
-            input.classList.add('form-control');
-
-            div.append(label, input);
-            return div;
-        };
-        // Funzione per creare un gruppo label + select
-        const createSelectGroup = (labelText, name, options, selectedValue) => {
-            const id = `${name}_${counter}`;
-
-            const div = document.createElement('div');
-            div.classList.add('my_input_group');
-
-            const label = document.createElement('label');
-            label.setAttribute('for', id);
-            label.classList.add('input-group-text');
-            label.textContent = labelText;
-
-            const select = document.createElement('select');
-            select.name = `field_set[${counter_name}][${name}]`;
-            select.classList.add('form-control');
-            select.id = id;
-
-            options.forEach(opt => {
-                const option = document.createElement('option');
-                option.value = opt.toLowerCase();
-                option.textContent = opt;
-                if (opt.toLowerCase() === selectedValue.toLowerCase()) {
-                    option.selected = true;
-                }
-                select.appendChild(option);
-            });
-
-            div.append(label, select);
-            return div;
-        };
- // ✅ Funzione per creare il gruppo dei checkbox "giorni chiusura"
-        const createDaysGroup = () => {
-            const days = {
-                'Lunedì': 1,
-                'Martedì': 2,
-                'Mercoledì': 3,
-                'Giovedì': 4,
-                'Venerdì': 5,
-                'Sabato': 6,
-                'Domenica': 7,
-            };
-
-            const div = document.createElement('div');
-            div.classList.add('btn-group', 'mt-2');
-            div.setAttribute('role', 'group');
-            div.setAttribute('aria-label', 'Giorni di chiusura');
-
-            Object.entries(days).forEach(([dayName, dayValue]) => {
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.classList.add('btn-check');
-                input.name = `field_set[${counter_name}][closed_days][]`;
-                input.id = `btncheck_${counter}_${dayValue}_${dayName}`;
-                input.value = dayValue;
-
-                const label = document.createElement('label');
-                label.classList.add('btn', 'btn-outline-danger');
-                label.setAttribute('for', `btncheck_${counter}_${dayValue}_${dayName}`);
-                label.textContent = dayName;
-
-                div.append(input, label);
-            });
-
-            return div;
-        };
-        // Crea i tre campi
-        const campoGroup = createInputGroup('Campo', 'name_field', 'text', 'Inserisci nome campo');
-        const h_start = createInputGroup('Apertura', 'h_start', 'time', '');
-        const durataGroup = createInputGroup('Durata minima', 'm_during', 'number', 'Tempo in minuti');
-        const durataClientGroup = createInputGroup('Durata slot cliente', 'm_during_client', 'number', 'Tempo in minuti');
-        const numeroGroup = createInputGroup('N° slot', 'n_slot', 'number', '0');
-        const sportGroup = createSelectGroup('Sport', 'type', ['Padel', 'Calcio', 'Tennis', 'Basket'], 'Padel');
-        const daysGroup = createDaysGroup(); // ✅ nuovo gruppo di checkbox
-
-        // Bottone rimuovi
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-        </svg>`;
-        removeBtn.classList.add('my_btn_4', 'null', 'delete');
-        removeBtn.addEventListener('click', () => section.remove());
-        
-        // //duplica
-        // const duplicateBtn = document.createElement('button');
-        // duplicateBtn.type = 'button';
-        // duplicateBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
-        //     <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-        // </svg>`;
-        // duplicateBtn.classList.add('my_btn_4', 'duplicate-btn');
-        // duplicateBtn.addEventListener('click', () => {
-        //     // Clona l'intera sezione
-        //     const clone = section.cloneNode(true);
-
-        //     // Rimuovi il vecchio bottone di duplicazione dal clone
-        //     const oldDuplicate = clone.querySelector('.duplicate-btn');
-        //     if (oldDuplicate) oldDuplicate.remove();
-
-        //     const inputs = clone.querySelectorAll('input, select, label');
-        //     inputs.forEach(el => {
-        //         if (el.id) el.id = el.id.replace(/_\d+$/, `_${counter}`);
-                
-        //         if (el.name) {
-        //             // Trova e sostituisce solo il primo valore tra ['...']
-        //             el.name = el.name.replace(/\['([^']+)'\]/, `['campo${counter}']`);
-        //         }
-
-        //         if (el.htmlFor) el.htmlFor = el.htmlFor.replace(/_\d+$/, `_${counter}`);
-        //     });
-
-
-        //     const removeBtnClone = clone.querySelector('.delete');
-        //     if (removeBtnClone) {
-        //         removeBtnClone.addEventListener('click', () => clone.remove());
-        //     }
-
-        //     const cont_act = document.createElement('div');
-        //     cont_act.classList.add('cont_act');
-        //     cont_act.append(removeBtnClone );
-        //     clone.append(cont_act);
-
-        //     // Inserisce il clone subito dopo la sezione originale
-        //     section.insertAdjacentElement('afterend', clone);
-        // });
-
-                
-        const cont_act = document.createElement('div');
-        cont_act.classList.add('cont_act');
-        cont_act.append(removeBtn)
-        // Aggiunge tutto alla section
-        section.append(
-            campoGroup,
-            sportGroup,
-            h_start,
-            durataGroup,
-            durataClientGroup,
-            numeroGroup,
-            daysGroup,
-            cont_act,
-        );
-
-        // Inserisce la section nel container
-        container.appendChild(section);
-    });
-
-    const buttons_delete = document.querySelectorAll('.delete');
-
-    buttons_delete.forEach(button => {
-        button.addEventListener('click', function() {
-            // Trova la sezione genitore più vicina
-            const section = this.closest('section');
-
-            // Effetto dissolvenza
-            section.style.transition = 'opacity 0.3s ease';
-            section.style.opacity = '0';
-
-            setTimeout(() => {
-                section.remove(); // rimuove completamente dal DOM
-            }, 400);
-        });
-    });
-
-    const radios = document.querySelectorAll('input[name="set_trainer[field]"]');
-    const startSelect = document.getElementById("h_start_trainer");
-    const endSelect = document.getElementById("h_end_trainer");
-
-    function generateOptions(hStart, nSlot, duration) {
-
-        // Pulizia select
-        startSelect.innerHTML = "";
-        endSelect.innerHTML = "";
-
-        const slots = [];
-        let current = hStart;
-
-        // Generazione slot orari
-        for (let i = 0; i < nSlot; i++) {
-            slots.push(current);
-            current = addMinutes(current, duration);
-        }
-
-        // Popola START
-        slots.forEach(t => {
-            let opt = document.createElement("option");
-            opt.value = t;
-            opt.textContent = t;
-            startSelect.appendChild(opt);
-        });
-
-        // Popola END (lo slot successivo)
-        for (let i = 1; i < slots.length; i++) {
-            let opt = document.createElement("option");
-            opt.value = slots[i];
-            opt.textContent = slots[i];
-            endSelect.appendChild(opt);
-        }
-    }
-
-    function addMinutes(time, minutes) {
-        let [h, m] = time.split(":").map(Number);
-        let date = new Date();
-        date.setHours(h, m + minutes);
-        return date.toTimeString().substring(0, 5);
-    }
-
-    radios.forEach(radio => {
-        radio.addEventListener("change", function () {
-
-            const hStart = this.dataset.h_start;
-            const nSlot = parseInt(this.dataset.n_slot);
-            const duration = parseInt(this.dataset.m_during_client);
-
-            if (!hStart || !nSlot || !duration) return;
-
-            generateOptions(hStart, nSlot, duration);
-        });
-    });
-
-    
-});
-</script>
 
 @endsection
 

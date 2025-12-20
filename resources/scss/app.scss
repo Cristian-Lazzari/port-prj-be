@@ -96,26 +96,30 @@ $fs_xlg: clamp(28px, 3.8vw, 39px);
     opacity: .5;
 }
 .main-container-page{
-    height: 100dvh;
-    overflow: hidden !important;
-    padding: 0;
+    padding: 25px 25px 20vh;
+    max-width: 800px;
     margin: 0 auto;
 }
 .page_nav{
-    width: 100% !important;
-    padding: 1.4rem 25px 350px;
-    height: 100vh !important;
-    max-width: 700px;
-    margin: 0 auto;
-    overflow-y: auto;
-    position: relative;
     h1{
-        //text-align: center;
-        margin: 2rem 0;
-        width: 100%;
-        font-size: $fs_xlg;
-    }
-    
+        svg{
+            height: $fs_xlg;
+            width: $fs_xlg;
+            margin: 0 !important;
+        }
+        text-align: center;
+        margin: 10px 0 2.8rem;
+        font-family: monospace !important;
+    }   
+}
+body{
+    background-color: var(--c1); 
+    background-size: cover;
+    height: 100%;
+    padding-bottom: 10% !important;
+    color: var(--c3);
+    overflow: auto;
+    overflow: scroll !important;
 }
 @media (max-width: 500px) {
     .page_nav{
@@ -351,17 +355,7 @@ html{
     color: var(--c3) !important;
 }
 
-body{
-    background-color: var(--c1); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    //padding-top: 80px;
-    height: 100dvh;
-    overflow: hidden;
-    //padding-bottom: 100%;
-    color: var(--c3);
-    
-}
+
 
 
 
@@ -650,9 +644,8 @@ body{
             align-items: center;
             margin-bottom: .5rem;
             font-size: $fs_sm_2;
-            flex-wrap: wrap;
+            //flex-wrap: wrap;
             gap: 1rem;
-            
             .boat{
                 background-color: var(--c3_op);
                 color: var(--c1);
@@ -660,6 +653,7 @@ body{
                 border-radius: 40px;
                 font-size: $fs_sm;
                 display: flex;
+                width: fit-content;
                 gap: .3rem;
                 align-items: center;
                 white-space: nowrap;
@@ -670,8 +664,6 @@ body{
                     width: 20px;
                 }
             }
-
-
         }
     }
     .item{
@@ -3708,6 +3700,68 @@ section{
     color: var(--c3);
     cursor: pointer;
 }
+
+//mappa create barca planimetria
+#map-wrapper {
+    width: 100%;
+    height: 600px;
+    overflow: auto; /* SCROLL */
+    border: 1px solid var(--c3);
+    background-color: var(--c3);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+#map-viewport {
+    transform-origin: 0 0;
+}
+
+#map {
+    position: relative;
+    width: 1700px;
+    height: 987px;
+    background: url('/mappa-porto.jpg') center / cover;
+
+    .boat{
+        position: absolute;
+        background: var(--c1);
+        border-radius: 5px;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-shadow: 1px 1px 2px var(--c1);
+        font-size: $fs_sm_1;
+        transform-origin: center center;
+    }
+    #new-boat{
+        background-color: var(--c2);
+        border: 2px solid var(--c1);
+        color: var(--c1);
+        cursor: grab;
+    }
+}
+
+.map_toolbar{
+    display: flex;
+    justify-content: flex-end;
+
+    gap: .5rem;
+    margin-bottom: .4rem;
+    button{
+        background-color: var(--c1);
+        border: 1px solid var(--c3);
+        border-radius: 8px;
+        padding: .4rem;
+        cursor: pointer;
+        svg{
+            height: 20px;
+            width: 20px;
+            fill: var(--c3);
+        }
+    }
+}
+
 
 
     /* From Uiverse.io by Yaya12085 */ 

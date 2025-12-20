@@ -22,6 +22,10 @@ return new class extends Migration
             $table->mediumInteger('draft');
             $table->mediumInteger('price');
             $table->tinyInteger('type')->nullable();
+            
+            $table->mediumInteger('pos_y');
+            $table->mediumInteger('pos_x');
+            $table->smallInteger('rotation');
 
             $table->timestamps();
         });

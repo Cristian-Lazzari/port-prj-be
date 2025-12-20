@@ -22,14 +22,12 @@ class SlotController extends Controller
         return view('admin.Slots.index', compact('slots'));
     }
     
-    /**
-     * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+
     public function create()
     {
-        return view('admin.Slots.create');
+        $slots = Slot::with('reservations')->orderBy('created_at', 'desc')->get();
+
+        return view('admin.Slots.create', compact('slots'));
     }
 
 
@@ -47,6 +45,9 @@ class SlotController extends Controller
         $slot->beam = $data['beam'];
         $slot->type = $data['type'];
         $slot->price = $data['price'];
+        $slot->pos_x = $data['pos_x'];
+        $slot->pos_y = $data['pos_y'];
+        $slot->rotation = $data['rotation'] ?? 0;
 
         
         $slot->save();
@@ -73,12 +74,36 @@ class SlotController extends Controller
 
     public function edit($id)
     {
-        //
+        $slot = Slot::findOrFail($id);
+        $slots = Slot::with('reservations')->where('id', '!=', $id)->orderBy('created_at', 'desc')->get();
+        return view('admin.slots.edit', compact('slot', 'slots'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all(); 
+        $request->validate($this->validations);
+
+        $slot = Slot::findOrFail($id);
+
+
+        $slot->name = $data['name'];
+        $slot->loa = $data['loa'];
+        $slot->draft = $data['draft'];
+        $slot->beam = $data['beam'];
+        $slot->type = $data['type'];
+        $slot->price = $data['price'];
+        $slot->pos_x = $data['pos_x'];
+        $slot->pos_y = $data['pos_y'];
+        $slot->rotation = $data['rotation'] ?? 0;
+
+        
+        $slot->update();
+
+
+        
+        $m = 'Lo slot "' . $data['name'] . '" è stato modificato correttamente';
+        return to_route('admin.slots.index')->with('message', $m);   
     }
 
 

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Boat;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
     private $validations = [
-        'nickname'   => 'required|string|min:2|unique:clients,nickname',
         'mail'       => 'required|string|min:5|unique:clients,mail',
         'phone'      => 'required|min:9',
         'name'       => 'required|string',
         'surname'    => 'required|string',
+        'loa'    => 'required',
+        'draft'    => 'required',
+        'beam'    => 'required',
+        'type'    => 'required',
+        'model'    => 'required',
     ];
 
     public function verifyOtp(Request $request){
@@ -80,26 +86,39 @@ class ClientController extends Controller
 
     public function register(Request $request){
         $data = $request->all();
-        $existingPlayer = Client::where('nickname', $data['nickname'])->orWhere('mail', $data['mail'])->first();
+        $existingPlayer = Client::where('mail', $data['mail'])->first();
         if($existingPlayer){
             return response()->json([
                 'success' => false,
-                'message' => 'Nickname o email già in uso',
+                'message' => 'Email già in uso',
             ]); 
         }
-        $newPlayer = new Client();
-        $newPlayer->name = $data['name'];
-        $newPlayer->surname = $data['surname'];
-        $newPlayer->nickname = $data['nickname'];
-        $newPlayer->mail = $data['mail'];
-        $newPlayer->sex = $data['sex'];
-        $newPlayer->phone = $data['phone'] ?? null;
-        $newPlayer->save();
+        $new_client = new Client();
+        $new_client->name = $data['name'];
+        $new_client->surname = $data['surname'];
+        
+        $new_client->mail = $data['mail'];
+        $new_client->phone = $data['phone'] ?? null;
+        
+        $boat = new Boat();
+        $new_client->save();
+
+        $boat->name = $data['boat']['name'];
+        $boat->loa = $data['boat']['loa'];
+        $boat->draft = $data['boat']['draft'];
+        $boat->beam = $data['boat']['beam'];
+        $boat->serial_code = $data['boat']['serial_code'];
+        $boat->type = $data['boat']['type'];
+        $boat->model = $data['boat']['model'];
+        $boat->client_id = $new_client->id;
+
+
+        $boat->save();
         
         return response()->json([
             'success' => true,
             'message' => 'Registrazione avvenuta con successo',
-            'data' => $newPlayer
+            'data' => $new_client
         ]);
     }
 }

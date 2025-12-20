@@ -24,7 +24,7 @@
             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
             <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
         </svg>
-        PREONOTAZIONI
+        Prenotazioni
     </h1>        
     <div class="filters">
         <div class="bar">
@@ -70,13 +70,14 @@
         @endphp
             <div class="wrap_item">
                 <div class="top">
-                    <div class="client">{{substr($r->client->name, 0, 1)}}. {{$r->client->surname}}</div> <div class="boat">{{$r->boat->name}}</div>
+                    <div class="client">{{substr($r->client->name, 0, 1)}}. {{$r->client->surname}}</div> 
+                    <div class="boat">{{$r->boat->name}}</div>
                 </div>
                 <div class="item">
                     <div class="slot">{{$r->slot->name}}</div>
                     <div class="date">
                         <p>Da <strong>{{$formatter->format($r->start_date)}}</strong></p>
-                        <p>A <strong>{{$formatter->format($r->end_date)}}</strong></p>
+                        <p>A &nbsp; <strong>{{$formatter->format($r->end_date)}}</strong></p>
                     </div>
                     <div class="status">confermata</div>
                     
@@ -88,73 +89,6 @@
     </div>
 </div>
 
-<script>
-// document.addEventListener('DOMContentLoaded', function () {
-//     const typeToggle = document.getElementById('typeToggle');
-//     const sortToggle = document.getElementById('sortToggle');
-//     const reservationsList = document.getElementById('reservations-list');
-//     const sortIcon = sortToggle.querySelector('svg');
-
-//     let sortOrder = 'desc';
-//     let statusFilter = 'all';
-
-//     function filterAndSort() {
-//         const items = Array.from(reservationsList.querySelectorAll('.res_item'));
-
-//         items.forEach(item => {
-//             const isCancelled = item.classList.contains('off');
-//             const matchesStatus =
-//                 statusFilter === 'all' ||
-//                 (statusFilter === 'confirmed' && !isCancelled) ||
-//                 (statusFilter === 'cancelled' && isCancelled);
-
-//             item.style.display = matchesStatus ? '' : 'none';
-//         });
-
-//         // Ordinamento
-//         const visibleItems = items.filter(i => i.style.display !== 'none');
-//         visibleItems.sort((a, b) => {
-//             const aDate = new Date(a.dataset.created);
-//             const bDate = new Date(b.dataset.created);
-//             return sortOrder === 'asc' ? aDate - bDate : bDate - aDate;
-//         });
-
-//         visibleItems.forEach(i => reservationsList.appendChild(i));
-//     }
-
-//     // Toggle tipo (Tutte / Confermate / Annullate)
-//     typeToggle.addEventListener('click', () => {
-//         if (statusFilter === 'all') {
-//             statusFilter = 'confirmed';
-//             typeToggle.textContent = 'Confermate';
-//             typeToggle.classList.remove('cancelled');
-//             typeToggle.classList.add('confirmed');
-//         } else if (statusFilter === 'confirmed') {
-//             statusFilter = 'cancelled';
-//             typeToggle.textContent = 'Annullate';
-//             typeToggle.classList.remove('confirmed');
-//             typeToggle.classList.add('cancelled');
-//         } else {
-//             statusFilter = 'all';
-//             typeToggle.textContent = 'Tutte';
-//             typeToggle.classList.remove('confirmed', 'cancelled');
-//         }
-//         filterAndSort();
-//     });
-
-//     // Toggle ordinamento + rotazione icona
-//     sortToggle.addEventListener('click', () => {
-//         sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-//         sortToggle.classList.toggle('active', sortOrder === 'asc');
-//         filterAndSort();
-
-//         // Rotazione icona
-//         sortIcon.style.transform = sortOrder === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)';
-//     });
-
-//     filterAndSort();
-// });
-</script>
 
 
 

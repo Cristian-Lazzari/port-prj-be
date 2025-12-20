@@ -25,13 +25,7 @@ class SettingController extends Controller
         $setting['Servizio di Prenotazione Online']->status = $data['status_service'];
         $setting['Servizio di Prenotazione Online']->save();
 
-        $setting['Periodo di Ferie']->status = $data['ferie_status'];
-        $propertyArray = [
-            'from' => $data['from'],
-            'to' => $data['to'],
-        ];
-        $setting['Periodo di Ferie']->property = json_encode($propertyArray);
-        $setting['Periodo di Ferie']->save();
+
 
 
         $contatti = [
@@ -46,48 +40,33 @@ class SettingController extends Controller
         $setting['Contatti']->property = json_encode($contatti);
         $setting['Contatti']->save();      
         
-        $day_off = json_decode($setting['advanced']->property, 1)['day_off'];
-        $field_set = json_decode($setting['advanced']->property, 1)['field_set'];
-        $trainer_set = json_decode($setting['advanced']->property, 1)['trainer_set']?? [];
-                
+        $oldPosition = json_decode($setting['Posizione']['property'], 1);
 
-        
-        foreach ($data['field_set'] as $k => $f) {
-            $field_set[$f['name_field']] = [
-                'h_start'           => $f['h_start'],
-                'n_slot'            => $f['n_slot'],
-                'm_during'          => $f['m_during'],
-                'm_during_client'   => $f['m_during_client'],        
-                'type'              => $f['type'],        
-                'closed_days'       => isset($f['closed_days']) ? $f['closed_days'] : [],        
+        if(isset($oldPosition['foto_maps'])){
+            $posizione = [
+                'foto_maps' =>  $oldPosition['foto_maps'],
+                'link_maps' =>  $request->link_maps,
+                'indirizzo' =>  $request->indirizzo,
             ];
-        }
-       
-        if (auth()->user()->role == 'trainer') {
-            $validated = $request->validate([
-                'set_trainer.h_start' => ['required', 'date_format:H:i'],
-                'set_trainer.h_end'   => ['required', 'date_format:H:i', 'after:set_trainer.h_start'],
-            ], [
-                'set_trainer.h_end.after' => 'L\'ora di fine deve essere successiva all\'ora di inizio.',
-            ]);
         
-            $trainer_set[auth()->user()->id] = [
-                'field' => $data['set_trainer']['field'],
-                'h_start' => $data['set_trainer']['h_start'],
-                'h_end' => $data['set_trainer']['h_end'],
-                'day_w' => $data['set_trainer']['day_w'],
+            if (isset($request->foto_maps)) {
+                $imagePath = $request->file('foto_maps')->store('public/uploads');
+                $posizione['foto_maps'] = $imagePath;
+            }
+        }else{
+            $posizione = [
+                'foto_maps' =>  "",
+                'link_maps' =>  $request->link_maps,
+                'indirizzo' =>  $request->indirizzo,
             ];
-            
+            if (isset($request->foto_maps)) {
+                $imagePath = $request->file('foto_maps')->store('public/uploads');
+                $posizione['foto_maps'] = $imagePath;
+            }
         }
-        $setting['advanced']->property = json_encode([
-            'day_off'           => $day_off,
-            'max_delay_default' => $data['max_delay_default'],
-            'delay_trainer'     => $data['delay_trainer'],
-            'field_set'         => $field_set,  
-            'trainer_set'       => $trainer_set,
-        ]);
+        $setting['Posizione']->property = json_encode($posizione);
+        $setting['Posizione']->save();
 
-        $setting['advanced']->save();
         
         $m = 'Le impostazioni sono state ggiornate correttamente';
 

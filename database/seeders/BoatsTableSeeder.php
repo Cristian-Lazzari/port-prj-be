@@ -19,12 +19,15 @@ class BoatsTableSeeder extends Seeder
                 Boat::create([
                     'client_id' => $client->id,
                     'name' => 'Boat ' . strtoupper(fake()->lexify('???')),
-                    'loa' => rand(20, 100),    // lunghezza in decimetri
-                    'draft' => rand(5, 20),    // pescaggio in decimetri
-                    'beam' => rand(5, 20),     // larghezza in decimetri
+
+                    'draft' => rand(10, 20),   // max pescaggio
+                    'beam' => rand(100, 130),    // 
+                    'loa' => rand(300, 400),     // 
+
                     'model' => rand(5, 20),     // larghezza in decimetri
                     'serial_code' => rand(5, 20),     // larghezza in decimetri
                     'type' => rand(1, 3),     // larghezza in decimetri
+                    
                 ]);
             }
         }

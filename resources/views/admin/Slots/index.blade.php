@@ -42,7 +42,39 @@
             </a>
         </div>
     </div>
+    <div class="map_toolbar">
+        <button type="button" id="zoom-in">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
+        </button>
+        <button type="button" id="zoom-out">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"/></svg>
+        </button>
+    </div>
+    <div id="map-wrapper">
+        <div id="map-wrapper">
+            <div id="map-viewport">
+                <div id="map">
 
+                    {{-- barche --}}
+                    @foreach($slots as $s)
+                        <div class="boat"
+                            style="
+                                left: {{ $s->pos_x }}px;
+                                top: {{ $s->pos_y }}px;
+                                width: {{ $s->beam / 5}}px;
+                                height: {{ $s->loa / 5}}px;
+                                transform: rotate({{ $s->rotation }}deg);
+                            ">
+                            <span>{{ $s->name }}</span>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
     <div class="info_box_day">
         <div class="box">
             @foreach ($slots as $r)
@@ -101,7 +133,7 @@
                                             <div class="date">
 
                                                 <p>Da <strong>{{$formatter->format($i->start_date)}}</strong></p>
-                                                <p>A <strong>{{$formatter->format($i->end_date)}}</strong></p>
+                                                <p>A &nbsp; <strong>{{$formatter->format($i->end_date)}}</strong></p>
                                             </div>
                                             @if ($i->start_date <= now() && $i->end_date >= now())
                                                 <div class="status">
@@ -138,6 +170,37 @@
 </div>
 
 
+<script>
+/* ======================
+   CONFIGURAZIONE
+====================== */
+const SCALE = 10; // 1 metro = 10px
 
+let map = document.getElementById('map');
+
+let scale = 1;
+let rotation = 0;
+let isDragging = false;
+let offsetX, offsetY;
+
+/* ======================
+   ZOOM MAPPA (SCALA TUTTO)
+====================== */
+const viewport = document.getElementById('map-viewport');
+
+function applyZoom() {
+    viewport.style.transform = `scale(${scale})`;
+}
+
+document.getElementById('zoom-in').onclick = () => {
+    scale += 0.1;
+    applyZoom();
+};
+
+document.getElementById('zoom-out').onclick = () => {
+    scale = Math.max(0.5, scale - 0.1);
+    applyZoom();
+};
+</script>
 @endsection
 

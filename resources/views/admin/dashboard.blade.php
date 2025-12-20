@@ -34,7 +34,7 @@
     <h1> <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-calendar2-week mx-3" viewBox="0 0 16 16">
             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
             <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
-        </svg> CALENDARIO
+        </svg> Arrivi e Partenze
     </h1>
 
     <div id="carouselExampleIndicators" class="carousel slide my_carousel" >
@@ -102,22 +102,6 @@
     </div>
 
     <div id="day-info" class="info_box_day mt-5 pt-5">
-        {{-- <div class="box">
-            <div class="wrap_item">
-                <div class="top">
-                    <div class="client"> </div> <div class="boat"></div>
-                </div>
-                <div class="item">
-                    <div class="slot"></div>
-                    <div class="date">
-                        <p>Da <strong>t</strong></p>
-                        <p>A <strong>t</strong></p>
-                    </div>
-                    <div class="status">confermata</div>
-                    
-                </div>
-            </div>
-        </div> --}}
     </div>
 
     
@@ -171,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="slot">${r.slot.name}</div>
                             <div class="date">
                                 <p class="ex">Da <strong>${formatShortWithWeekday(r.start_date)}</strong></p>
-                                <p>A <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
+                                <p>A &nbsp; <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
                             </div>
                             <div class="status">confermata</div>
                         </div>
@@ -195,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="slot">${r.slot.name}</div>
                             <div class="date">
                                 <p>Da <strong>${formatShortWithWeekday(r.start_date)}</strong></p>
-                                <p class="ex">A <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
+                                <p class="ex">A &nbsp; <strong>${formatShortWithWeekday(r.end_date)}</strong></p>
                             </div>
                             <div class="status">confermata</div>
                         </div>

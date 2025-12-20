@@ -29,7 +29,6 @@ class PageController extends Controller
     
     private function get_res(){
         $reservations = Reservation::with('slot', 'client', 'boat')->get();
-
         $days = [];
 
         foreach ($reservations as $reservation) {
@@ -66,7 +65,7 @@ class PageController extends Controller
 
     }
     private function get_date(){
-        $firstDate     = Reservation::orderBy('start_date', 'asc')->value('start_date');
+        $firstDate     = Reservation::orderBy('start_date', 'asc')->value('start_date') ?? Carbon::now();
         $lastDate      = Reservation::orderBy('start_date', 'desc')->value('start_date');
 
         //$adv = json_decode(Setting::where('name', 'advanced')->first()->property, 1);
