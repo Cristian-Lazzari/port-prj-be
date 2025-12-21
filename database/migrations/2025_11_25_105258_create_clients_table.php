@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('status')->default('0'); // 1 attivo // 0 non attivo
             $table->text('document')->nullable();
             $table->text('note')->nullable();
+
+                        
+            $table->string('otp')->nullable();
+            $table->string('otp_expires_at')->nullable();
             $table->timestamps();
         });
     }

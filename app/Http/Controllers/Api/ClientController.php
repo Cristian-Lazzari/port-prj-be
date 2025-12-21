@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Boat;
+use App\Mail\otpUser;
 use App\Models\Client;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ClientController extends Controller
 {
@@ -23,7 +26,7 @@ class ClientController extends Controller
 
     public function verifyOtp(Request $request){
 
-        $user = Client::where('nickname', $request->nickname)->first();
+        $user = Client::where('mail', $request->mail)->first();
         $expire = Carbon::parse($user->otp_expires_at); // Convert to Carbon instance
         if ($expire < now()) {
             return response()->json([
@@ -51,7 +54,7 @@ class ClientController extends Controller
     public function login_client(Request $request)
     {
         $data = $request->all();
-        $client = Client::where('nickname', $data['nickname'])->where('mail', $data['mail'])->first();
+        $client = Client::where('name', $data['name'])->where('surname', $data['surname'])->where('mail', $data['mail'])->first();
 
         if($client){
 
@@ -63,7 +66,7 @@ class ClientController extends Controller
             $bodymail = [
                 'otp' => $otp,
                 'email' => $client->mail,
-                'nickname' => $client->nickname,
+                'name' => $client->name . ' ' . $client->surname,
                 'admin_phone' => $contact['phone'],
             ];
            
@@ -118,7 +121,7 @@ class ClientController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Registrazione avvenuta con successo',
-            'data' => $new_client
+            'user' => $new_client
         ]);
     }
 }
