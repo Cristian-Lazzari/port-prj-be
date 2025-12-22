@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Boat;
 use App\Mail\otpUser;
 use App\Models\Client;
@@ -26,7 +27,7 @@ class ClientController extends Controller
 
     public function verifyOtp(Request $request){
 
-        $user = Client::where('mail', $request->mail)->first();
+        $user = Client::where('mail', $request->mail)->with('boats')->first();
         $expire = Carbon::parse($user->otp_expires_at); // Convert to Carbon instance
         if ($expire < now()) {
             return response()->json([
@@ -121,7 +122,8 @@ class ClientController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Registrazione avvenuta con successo',
-            'user' => $new_client
+            'user' => $new_client,
+            'boat' => $boat
         ]);
     }
 }
