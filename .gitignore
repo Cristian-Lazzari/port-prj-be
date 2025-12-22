@@ -18,5 +18,4 @@ yarn-error.log
 /.vscode
 /config/configurazione.php
 composer.lock
-composer.json
 
