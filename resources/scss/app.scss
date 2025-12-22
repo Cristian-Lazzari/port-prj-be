@@ -122,11 +122,9 @@ body{
     overflow: scroll !important;
 }
 @media (max-width: 500px) {
-    .page_nav{
-        padding: 1.4rem 10px 350px;
+    .main-container-page{
+        padding: 0px 10px 20vh !important;
     }
-
-    
 }
 
 
