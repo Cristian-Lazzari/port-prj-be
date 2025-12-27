@@ -32,6 +32,7 @@
         </svg>
         Disposizione portuale
     </h1>
+        
 
     <div class="floating">
         <div class="int">
@@ -42,6 +43,33 @@
             </a>
         </div>
     </div>
+    <div class="filters">
+            <div class="bar">
+                <input type="checkbox" class="check" id="f">
+                <div class="box">
+                    <input name="date" type="date" value="{{$time_filter}}" class="search">
+                    {{-- <button type="submit" class="type">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                        </svg>
+                    </button> --}}
+                </div>
+
+                <label for="f">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-funnel" viewBox="0 0 16 16">
+                        <path
+                            d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z" />
+                    </svg>
+                </label>
+            </div>
+        </div>
     <div class="map_toolbar">
         <button type="button" id="zoom-in">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
@@ -57,15 +85,40 @@
 
                     {{-- barche --}}
                     @foreach($slots as $s)
-                        <div class="boat"
+                    @php
+
+                        $now = now();
+
+                        $isOccupied = $s->reservations->contains(function ($reservation) use ($now) {
+                            return $now->between(
+                                Carbon\Carbon::parse($reservation->start_date),
+                                Carbon\Carbon::parse($reservation->end_date)
+                            );
+                        });
+                    @endphp
+                        <div 
+                            class="boat {{ $isOccupied ? 'on' : '' }}"
+                            data-slot-id="{{ $s->id }}"
+                            data-reservations='@json(
+                                $s->reservations->map(fn($r) => [
+                                    "start" => $r->start_date,
+                                    "end"   => $r->end_date
+                                ])
+                            )'
                             style="
                                 left: {{ $s->pos_x }}px;
                                 top: {{ $s->pos_y }}px;
                                 width: {{ $s->beam / 5}}px;
                                 height: {{ $s->loa / 5}}px;
                                 transform: rotate({{ $s->rotation }}deg);
-                            ">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
+                            "
+                        >
+                            @if ($isOccupied )
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320 128C302.3 128 288 142.3 288 160C288 177.7 302.3 192 320 192C337.7 192 352 177.7 352 160C352 142.3 337.7 128 320 128zM224 160C224 107 267 64 320 64C373 64 416 107 416 160C416 201.8 389.3 237.4 352 250.5L352 508.4C414.9 494.1 462.2 438.7 463.9 371.9L447.8 386C437.8 394.7 422.7 393.7 413.9 383.7C405.1 373.7 406.2 358.6 416.2 349.8L480.2 293.8C489.2 285.9 502.8 285.9 511.8 293.8L575.8 349.8C585.8 358.5 586.8 373.7 578.1 383.7C569.4 393.7 554.2 394.7 544.2 386L528 371.9C525.9 485 433.6 576 320 576C206.4 576 114.1 485 112 371.9L95.8 386.1C85.8 394.8 70.7 393.8 61.9 383.8C53.1 373.8 54.2 358.7 64.2 349.9L128.2 293.9C137.2 286 150.8 286 159.8 293.9L223.8 349.9C233.8 358.6 234.8 373.8 226.1 383.8C217.4 393.8 202.2 394.8 192.2 386.1L176.1 372C177.9 438.8 225.2 494.2 288 508.5L288 250.6C250.7 237.4 224 201.9 224 160.1z"/></svg>
+                            @endif
+                            
                             <span>{{ $s->name }}</span>
                         </div>
                     @endforeach
@@ -79,33 +132,60 @@
     <div class="info_box_day">
         <div class="box">
             @foreach ($slots as $r)
-                <div class="item">
-           
-                    
+                <div 
+                    class="item"
+                    data-slot-id="{{ $r->id }}"
+                    data-reservations='@json(
+                        $r->reservations->map(fn($i) => [
+                            "boat"  => $i->boat->name,
+                            "start" => $i->start_date,
+                            "end"   => $i->end_date
+                        ])
+                    )'
+                >
                     <div class="slot">
                         {{$r->name}}
                         @if ($r->type == 1)
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-wheelchair" viewBox="0 0 16 16"><path d="M12 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.663 2.146a1.5 1.5 0 0 0-.47-2.115l-2.5-1.508a1.5 1.5 0 0 0-1.676.086l-2.329 1.75a.866.866 0 0 0 1.051 1.375L7.361 3.37l.922.71-2.038 2.445A4.73 4.73 0 0 0 2.628 7.67l1.064 1.065a3.25 3.25 0 0 1 4.574 4.574l1.064 1.063a4.73 4.73 0 0 0 1.09-3.998l1.043-.292-.187 2.991a.872.872 0 1 0 1.741.098l.206-4.121A1 1 0 0 0 12.224 8h-2.79zM3.023 9.48a3.25 3.25 0 0 0 4.496 4.496l1.077 1.077a4.75 4.75 0 0 1-6.65-6.65z"/></svg>
                         @endif
                     </div>
-                    @php
-                        $check = false;
-                    @endphp
-                    @foreach ($r->reservations as $i)
-                        @if ($i->start_date <= now() && $i->end_date >= now())
-                            <button class=" btn_delete status" type="button" data-bs-toggle="modal" data-bs-target="#rs{{$r->id}}" >
-                                {{$i->boat->name}}
-                            </button>
-                            @php $check = true; @endphp
+                    <div class="slot-status ">
+                        @php
+                            $check = false;
+                        @endphp
+                        @foreach ($r->reservations as $i)
+                            @if ($i->start_date <= now() && $i->end_date >= now())
+                                <button class=" btn_delete status" type="button" data-bs-toggle="modal" data-bs-target="#rs{{$r->id}}" >
+                                    {{$i->boat->name}}
+                                </button>
+                                @php $check = true; @endphp
+                            @endif
+                        @endforeach
+                        @if (!$check)
+
+                            @if (count($r->reservations) !== 0)
+                                <div class="count">
+                                    <span>
+                                        {{count($r->reservations)}}
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                                        <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+                                    </svg>
+                                </div>
+                                <button class="status" type="button" data-bs-toggle="modal" data-bs-target="#rs{{$r->id}}" >
+                                    Disponibile 
+                                </button>
+                            @else
+                                <button class="status" type="button">
+                                    Disponibile
+                                </button>
+                                
+                            @endif
+
                         @endif
-                    @endforeach
-                    @if (!$check)
-
-                        <button class="status" type="button" data-bs-toggle="modal" data-bs-target="#rs{{$r->id}}" >
-                            Disponibile
-                        </button>
-
-                    @endif
+                    </div>
+                    
                     <div class="actions">
                         <a href="{{route('admin.slots.edit', $r)}}" class="edit">
                             {{-- icona matita --}}
@@ -120,7 +200,7 @@
                         <div class="modal-dialog modal-dialog-centered"  action="{{ route('admin.boats.store') }}"  enctype="multipart/form-data"  method="POST">
                             <div class="modal-content mymodal_make_res creation">
                                 <section class="modal-body">
-                                    <div class="header_modal">
+                                    <div class="top">
                                         <h2>Prenotazioni</h2>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
@@ -166,6 +246,7 @@
                 </div>
             @endforeach
         </div>
+        
     </div>
 
 </div>
@@ -202,6 +283,88 @@ document.getElementById('zoom-out').onclick = () => {
     scale = Math.max(0.5, scale - 0.1);
     applyZoom();
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const dateInput = document.querySelector('input[name="date"]');
+    if (!dateInput) return;
+
+    const boats = document.querySelectorAll('.boat');
+    const slots = document.querySelectorAll('.item');
+
+    function isOccupied(reservations, selectedDate) {
+        return reservations.some(r => {
+            const start = new Date(r.start);
+            const end   = new Date(r.end);
+            return selectedDate >= start && selectedDate <= end;
+        });
+    }
+
+    function updateUI(selectedDate) {
+
+        /* ===== MAPPA ===== */
+        boats.forEach(boat => {
+            const reservations = JSON.parse(boat.dataset.reservations || '[]');
+
+            if (isOccupied(reservations, selectedDate)) {
+                boat.classList.add('on');
+            } else {
+                boat.classList.remove('on');
+            }
+        });
+
+        /* ===== LISTA SLOT ===== */
+        slots.forEach(slot => {
+            const reservations = JSON.parse(slot.dataset.reservations || '[]');
+            const statusBox = slot.querySelector('.slot-status');
+
+            if (!statusBox) return;
+
+            const active = reservations.find(r => {
+                const start = new Date(r.start);
+                const end   = new Date(r.end);
+                return selectedDate >= start && selectedDate <= end;
+            });
+
+            if (active) {
+                statusBox.innerHTML = `
+                    <button class="btn_delete status">
+                        ${active.boat}
+                    </button>
+                `;
+            } else if (reservations.length > 0) {
+                statusBox.innerHTML = `
+                    <div class="count">
+                        <span>
+                            ${reservations.length}
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                    </div>
+                    <button class="status">
+                        Disponibile
+                    </button>
+                `;
+            } else {
+                statusBox.innerHTML = `
+                    <button class="status">Disponibile</button>
+                `;
+            }
+        });
+    }
+
+    /* EVENTO */
+    dateInput.addEventListener('change', () => {
+        const selectedDate = new Date(dateInput.value);
+        if (isNaN(selectedDate)) return;
+
+        updateUI(selectedDate);
+    });
+
+});
 </script>
+
 @endsection
 

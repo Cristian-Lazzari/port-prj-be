@@ -717,9 +717,6 @@ html{
         border-radius: 23px;
         padding: .5rem .5rem .5rem 1.2rem;
         font-size: $fs_sm_3;
-        .top{
-            background-color: var(--c2);
-        }
         p{
             margin: 0 !important;
         }
@@ -769,6 +766,18 @@ html{
                 white-space: nowrap;
             }
         }
+        .slot-status{
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .count{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .4rem;
+            }
+        }
         .status{
             border: none;
             background-color: var(--c1);
@@ -779,6 +788,9 @@ html{
             font-size: $fs_sm;
             font-weight: 700;
             margin-left:  auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .actions{
             display: flex;
@@ -1109,7 +1121,6 @@ html{
         flex-wrap: wrap;
         gap: .5rem;
         align-items: center;
-        max-width: 700px;
         margin: 0 auto;
     }
     margin-bottom: 1rem;
@@ -1878,13 +1889,7 @@ html{
     }
 }
 
-.my_modal_dialog{
-    .modal-content{
-        background-color: var(--c3);
-    }
-    color: var(--c1) !important;
-   
-}
+
 
 
 .archived{
@@ -3604,7 +3609,7 @@ section{
     right: 0;
     width: 100%;
     isolation: isolate;
-    margin: 0 0 1rem;
+    margin: 0 0 3rem;
     .bar{
         width: 100%;
         max-width: 800px;
@@ -3803,6 +3808,13 @@ section{
         color: var(--c1);
         text-shadow: 1px 1px 2px var(--c1_op_3);
         cursor: grab;
+    }
+    .on{
+        border: 2px solid var(--c2);
+        svg{
+            fill: var(--c2)
+        }
+        
     }
 }
 

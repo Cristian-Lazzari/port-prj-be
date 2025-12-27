@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Slot;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,8 +19,9 @@ class SlotController extends Controller
     public function index()
     {
         $slots = Slot::with('reservations')->orderBy('created_at', 'desc')->get();
+        $time_filter = Carbon::now();
 
-        return view('admin.Slots.index', compact('slots'));
+        return view('admin.Slots.index', compact('slots','time_filter'));
     }
     
 
