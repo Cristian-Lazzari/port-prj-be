@@ -29,7 +29,7 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
 
-            $table->string('status')->default('0'); // 1 confirmed, 2 cancelled, 3 noshow
+            $table->string('status')->default('1'); // 1 ricevuta, 2 accunto, 3 pagata, 0 cancellata
             $table->string('message')->nullable(); // messaggio opzionale
 
             $table->timestamps();

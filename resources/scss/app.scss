@@ -354,7 +354,49 @@ html{
 }
 
 
-
+.new_players{
+    margin-bottom: 2rem;
+    .cont{
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+        align-items: center;
+        max-height: clamp(300px, 40vh, 450px);
+        overflow: auto;
+    }
+    .item{
+        flex: 1;
+        width: 100%;
+        background-color: var(--c3_op_3) !important;
+        color: var(--c3);
+        
+        .left{
+            color: var(--c3_op_8);
+            svg{
+                height: 20px;
+                width: 20px;
+                fill: var(--c3);
+            }
+            
+        }
+    }
+    input[type="checkbox"]:checked + .item{
+        background: var(--c3) !important;
+        .left, .center, svg{
+            fill: var(--c1);
+            color: var(--c1);
+        }
+        .actions svg{
+            fill: var(--c3);
+        }
+    }
+    input[type="checkbox"]{
+        width: 0;
+        height: 0;
+        position: absolute;
+        opacity: 0;
+    }
+}
 
 
 .error{
@@ -2945,10 +2987,16 @@ html{
     .label_c{
         display: flex;
         align-items: center;
-        gap:  .4rem;
+        gap:  .5rem;
         margin-bottom: 8px;
         font-weight: bolder;
         font-size: $fs_sm_3;
+        svg{
+            fill: var(--c3);
+            height: $fs_md;
+            width: $fs_md;
+        }
+
     }
     .price_input{
         p{
@@ -3217,12 +3265,15 @@ section{
         margin: 0;
     }
     h2{
+        display: flex;
+        gap: .8rem;
+        align-items: center;
         font-size: $fs_md;
         font-weight: 700;
         color: var(--c3_op);
         svg{
-            height: $fs_lg;
-            width: $fs_lg;
+            height: $fs_md;
+            width: $fs_md;
             fill: var(--c3);
         }
     }
