@@ -95,8 +95,10 @@ class SlotController extends Controller
         $slot->beam = $data['beam'];
         $slot->type = $data['type'];
         $slot->price = $data['price'];
-        $slot->pos_x = $data['pos_x'];
-        $slot->pos_y = $data['pos_y'];
+
+
+        $slot->pos_x = $data['pos_x'] ? $data['pos_x'] : $slot->pos_x ;
+        $slot->pos_y = $data['pos_y'] ? $data['pos_y'] : $slot->pos_y ;
         $slot->rotation = $data['rotation'] ?? 0;
 
         
@@ -105,7 +107,7 @@ class SlotController extends Controller
 
         
         $m = 'Lo slot "' . $data['name'] . '" è stato modificato correttamente';
-        return to_route('admin.Slots.index')->with('message', $m);   
+        return to_route('admin.slots.index')->with('message', $m);   
     }
 
 

@@ -717,12 +717,18 @@ html{
         border-radius: 23px;
         padding: .5rem .5rem .5rem 1.2rem;
         font-size: $fs_sm_3;
+        transition: all .24s ease-in-out;
         p{
             margin: 0 !important;
         }
         .slot{
             font-size: $fs_md;
             font-weight: 900;
+            svg{
+                fill: var(--c1);
+                height: $fs_sm_2;
+                width: $fs_sm_2;
+            }
         }
         .name{
             display: flex;
@@ -833,6 +839,11 @@ html{
         }
     }
 }
+
+
+
+
+
 .carousel-indicators{
     bottom: -3rem;
     button{
@@ -3017,7 +3028,7 @@ html{
     }
 
     .check_c{
-        transition: all .3s ease-in-out;
+        transition: all .24s ease-in-out;
         color: var(--c1);
         max-height: 50vh;
         border-radius: 10px;
@@ -3181,7 +3192,7 @@ section{
             box-shadow: 0 0 10px var(--c2_op);
             outline: none;
             opacity: 1;
-            transition: all .3s ease-in-out;
+            transition: all .24s ease-in-out;
             //background: linear-gradient(-25deg, #09033300 10%, var(--c3_op_3)40%, #09033300 60%, var(--c3_op_3));
         }
         
@@ -3235,7 +3246,7 @@ section{
             box-shadow: 0 0 3px var(--c2);
             outline: none;
             opacity: 1;
-            transition: all .3s ease-in-out;
+            transition: all .24s ease-in-out;
             box-shadow: 0 0 10px var(--c2_op);
         }
         label{
@@ -3404,7 +3415,7 @@ section{
                 box-shadow: 0 0 3px var(--c2);
                 outline: none;
                 opacity: 1;
-                transition: all .3s ease-in-out;
+                transition: all .24s ease-in-out;
                 box-shadow: 0 0 10px var(--c2_op);
             }
         }
@@ -3791,6 +3802,7 @@ section{
         gap: .3rem;
         transform-origin: center center;
         border-radius: 40%;
+        transition: all .24s ease-in-out;
         
         svg{
             aspect-ratio: 1;
@@ -3817,10 +3829,20 @@ section{
         
     }
 }
+.boat.hover-sync {
+    box-shadow: 0 0 9px var(--c2) !important;
+    transition: all .3s ease-in-out;
+}
+
+.item.hover-sync {
+    box-shadow: 0 0 9px var(--c2) !important;
+    transform: scale(1.02);
+    transition: all .3s ease-in-out;
+}
 
 .map_toolbar{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 
     gap: .5rem;
     margin-bottom: .4rem;
