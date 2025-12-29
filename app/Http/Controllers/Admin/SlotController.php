@@ -78,7 +78,7 @@ class SlotController extends Controller
     {
         $slot = Slot::findOrFail($id);
         $slots = Slot::with('reservations')->where('id', '!=', $id)->orderBy('created_at', 'desc')->get();
-        return view('admin.slots.edit', compact('slot', 'slots'));
+        return view('admin.Slots.edit', compact('slot', 'slots'));
     }
 
     public function update(Request $request, $id)
