@@ -12,7 +12,7 @@ class SlotController extends Controller
     private $validations = [
         'name'      => 'required|string',
         'loa'       => 'required',
-        'draft'     => 'required',
+        //'draft'     => 'required',
         'beam'      => 'required',
         'price'     => 'required',
     ];
