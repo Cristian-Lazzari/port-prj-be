@@ -43,7 +43,7 @@ class SlotController extends Controller
 
         $slot->name = $data['name'];
         $slot->loa = $data['loa'];
-        $slot->draft = $data['draft'];
+        $slot->draft = $data['draft'] ?? 0;
         $slot->beam = $data['beam'];
         $slot->type = $data['type'];
         $slot->price = $data['price'];
@@ -91,7 +91,7 @@ class SlotController extends Controller
 
         $slot->name = $data['name'];
         $slot->loa = $data['loa'];
-        $slot->draft = $data['draft'];
+        $slot->draft = $data['draft'] ?? 0;
         $slot->beam = $data['beam'];
         $slot->type = $data['type'];
         $slot->price = $data['price'];
