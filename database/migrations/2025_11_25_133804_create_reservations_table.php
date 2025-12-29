@@ -11,30 +11,45 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up(){
+    public function up()
+    {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('boat_id');
-            $table->unsignedBigInteger('slot_id');
 
-            
+            // 👇 unica modifica reale
+            $table->unsignedBigInteger('slot_id')->nullable();
 
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            $table->foreign('boat_id')->references('id')->on('boats')->onDelete('cascade');
-            $table->foreign('slot_id')->references('id')->on('slots')->onDelete('cascade');
+            $table->foreign('client_id')
+                ->references('id')
+                ->on('clients')
+                ->onDelete('cascade');
 
-           
+            $table->foreign('boat_id')
+                ->references('id')
+                ->on('boats')
+                ->onDelete('cascade');
+
+            // 👇 cambia solo la delete rule
+            $table->foreign('slot_id')
+                ->references('id')
+                ->on('slots')
+                ->onDelete('set null');
+
             $table->dateTime('start_date');
             $table->dateTime('end_date');
 
-            $table->string('status')->default('1'); // 1 ricevuta, 2 accunto, 3 pagata, 0 cancellata
-            $table->string('message')->nullable(); // messaggio opzionale
+            $table->string('status')->default('1');
+            // 1 ricevuta, 2 acconto, 3 pagata, 0 cancellata
+
+            $table->string('message')->nullable();
 
             $table->timestamps();
         });
     }
+
 
     public function down()
     {

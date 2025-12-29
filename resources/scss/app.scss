@@ -724,6 +724,9 @@ html{
         .slot{
             font-size: $fs_md;
             font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-items: center;
             svg{
                 fill: var(--c1);
                 height: $fs_sm_2;

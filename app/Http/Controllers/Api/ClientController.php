@@ -7,6 +7,7 @@ use App\Models\Boat;
 use App\Mail\otpUser;
 use App\Models\Client;
 use App\Models\Setting;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +28,7 @@ class ClientController extends Controller
 
     public function verifyOtp(Request $request){
 
-        $user = Client::where('mail', $request->mail)->with('boats')->first();
+        $user = Client::where('mail', $request->mail)->with('boats', 'reservations')->first();
         $expire = Carbon::parse($user->otp_expires_at); // Convert to Carbon instance
         if ($expire < now()) {
             return response()->json([
@@ -106,7 +107,7 @@ class ClientController extends Controller
         
         $boat = new Boat();
         $new_client->save();
-
+        
         $boat->name = $data['boat']['name'];
         $boat->loa = $data['boat']['loa'];
         $boat->draft = $data['boat']['draft'];
@@ -115,15 +116,23 @@ class ClientController extends Controller
         $boat->type = $data['boat']['type'];
         $boat->model = $data['boat']['model'];
         $boat->client_id = $new_client->id;
-
-
+        
         $boat->save();
+        
+        $reservation = new Reservation();
+        $reservation->start_date = $data['start_date'];
+        $reservation->end_date = $data['end_date'];
+        $reservation->message = $data['message'];
+        $reservation->client_id = $new_client->id;
+        $reservation->boat_id = $boat->id;
+        $reservation->save();
         
         return response()->json([
             'success' => true,
             'message' => 'Registrazione avvenuta con successo',
             'user' => $new_client,
-            'boat' => $boat
+            'boat' => $boat,
+            'reservation' => $reservation
         ]);
     }
 }
