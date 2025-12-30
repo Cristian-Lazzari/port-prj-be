@@ -21,8 +21,8 @@ class BoatsTableSeeder extends Seeder
                     'name' => 'Boat ' . strtoupper(fake()->lexify('???')),
 
                     'draft' => rand(10, 20),   // max pescaggio
-                    'beam' => rand(100, 130),    // 
-                    'loa' => rand(300, 400),     // 
+                    'beam' => rand(240, 350),    // 
+                    'loa' => rand(840, 2000),     // 
 
                     'model' => rand(5, 20),     // larghezza in decimetri
                     'serial_code' => rand(5, 20),     // larghezza in decimetri

@@ -16,12 +16,11 @@ class SlotsTableSeeder extends Seeder
                 'name' => $name,
                 'price' => rand(50, 100),    // prezzo
                 'draft' => rand(10, 20),   // max pescaggio
-                'beam' => rand(100, 130),    // 
-                'loa' => rand(300, 400),     // 
-
-                'pos_y' => rand(400, 800),
-                'pos_x' => rand(160, 900),    
-                'rotation' =>10,
+                'beam' => rand(240, 550),    // 
+                'loa' => rand(840, 2000),     // 
+                'pos_y' => rand(500, 700),
+                'pos_x' => rand(270, 900),    
+                'rotation' =>5,
 
             ]);
         }

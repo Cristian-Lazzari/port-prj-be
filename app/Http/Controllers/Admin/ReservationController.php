@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Mail;
 class ReservationController extends Controller
 {
 
+    private $validations = [
 
+        'end_date'      => 'required',
+        'start_date'    => 'required',
+        'boat_client'   => 'required',
+       
+    ];
     public function index()
     {
         $reservations = Reservation::with('client','boat')->orderBy('created_at', 'desc')->get();
@@ -54,26 +60,40 @@ class ReservationController extends Controller
         return redirect()->route('admin.reservations.index')->with('message', 'Prenotazione creata con successo');
     }
 
-    public function show($id)
-    {
-        $reservation = Reservation::where('id',$id)->with('players')->first();
+    // public function show($id)
+    // {
+    //     $reservation = Reservation::where('id',$id)->with('players')->first();
         
 
-        return view('admin.Reservations.show', compact('reservation'));
-    }
+    //     return view('admin.Reservations.show', compact('reservation'));
+    // }
 
     public function edit($id)
     {
         $reservation = Reservation::where('id',$id)->first();
+        $slots = Slot::all();
        
-        return view('admin.Reservations.edit', compact('reservation'));
+        return view('admin.Reservations.edit', compact('reservation', 'slots'));
     }
 
 
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        
+
+        $reservation = Reservation::where('id',$id)->first();   
+        //dd($data);
+        $id = json_decode($data['boat_client']);     
+
+        $reservation->client_id = $id[1];
+        $reservation->boat_id = $id[0];
+        $reservation->slot_id = $data['slot_id'];
+        $reservation->start_date = Carbon::parse($data['start_date']);
+        $reservation->end_date = Carbon::parse($data['end_date']);
+        $reservation->status = $data['status'];
+        $reservation->message = $data['message'] ?? null;
+        $reservation->save();
+
         return redirect()->route('admin.reservations.index')->with('message', 'Prenotazione modificata con successo');
     }
 

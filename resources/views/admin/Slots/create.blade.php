@@ -161,7 +161,7 @@
 /* ======================
    CONFIGURAZIONE
 ====================== */
-const SCALE = 0.2; // 1 metro = 10px
+const SCALE = 0.1; // 1 metro = 10px
 
 let map = document.getElementById('map');
 let boat = document.getElementById('new-boat');

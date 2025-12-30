@@ -22,8 +22,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus-circle-fill mx-3" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
             </svg>
-        Crea una Prenotazione</h1>
-    <form class="creation mt-5"  action="{{ route('admin.reservations.store') }}"  enctype="multipart/form-data"  method="POST">
+        Modifica Prenotazione</h1>
+    <form class="creation mt-5"  action="{{ route('admin.reservations.update', $reservation) }}"  enctype="multipart/form-data"  method="POST">
+        @method('PUT')
         @csrf
         <section class="base">
       
@@ -34,38 +35,40 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/></svg>
                     Cliente
                 </label>
+                <input type="hidden" name="boat_client" value="[{{$reservation->boat->id . ','.$reservation->boat->client->id }}]">
                 <div class="cont">
-                    @foreach ($boats as $p)
-                        <input type="checkbox"
-                            name="boat_client"
-                            data-type="boat"
-                            data-boat-id="{{ $p->id }}"
-                            data-reservations='@json($p->reservations)'
-                            data-loa="{{ $p->loa }}"
-                            data-beam="{{ $p->beam }}"
-                            data-draft="{{ $p->draft }}"
-                            id="boat_{{ $p->id }}"
-                            value="[{{$p->id . ','.$p->client->id }}]" 
-                        >
-                        <label for="boat_{{ $p->id }}" class="item">
-                            <div class="left">
-                                <div class="time_slot">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
-                                    {{$p->name}}
-                                </div>
-                                <div class="date">{{$p->client->name}} {{$p->client->surname}}</div>
+                    <input type="checkbox"
+                        name="boat_client"
+                        data-type="boat"
+                        data-boat-id="{{ $reservation->boat->id }}"
+                        data-reservations='@json($reservation->boat->reservations)'
+                        data-loa="{{ $reservation->boat->loa }}"
+                        data-beam="{{ $reservation->boat->beam }}"
+                        data-draft="{{ $reservation->boat->draft }}"
+                        id="boat_{{ $reservation->boat->id }}"
+                        value="[{{$reservation->boat->id . ','.$reservation->boat->client->id }}]" 
+                        checked
+                        disabled
+                    >
+                    <label for="boat_{{ $reservation->boat->id }}" class="item">
+                        <div class="left">
+                            <div class="time_slot">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
+                                {{$reservation->boat->name}}
                             </div>
-                            <div class="actions">
-                                
-                                <a href="{{route('admin.clients.show', $p->client->id)}}" class="show">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </label>
-                    @endforeach
+                            <div class="date">{{$reservation->boat->client->name}} {{$reservation->boat->client->surname}}</div>
+                        </div>
+                        <div class="actions">
+                            
+                            <a href="{{route('admin.clients.show', $reservation->boat->client->id)}}" class="show">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </label>
+
                 </div>
             </div>
             <div class="p new_players info_box_day">
@@ -85,6 +88,9 @@
                             data-draft="{{ $p->draft }}"
                             id="slot_{{ $p->id }}"
                             value="{{$p->id}}" 
+                            @if ($p->id == $reservation->slot_id)
+                                checked
+                            @endif
                         >
                         <label for="slot_{{ $p->id }}" class="item">
                             <div class="left">
@@ -117,7 +123,7 @@
                         Arrivo
                     </label>
                     <p>
-                        <input value="{{ old('start_date') }}" type="date" name="start_date" id="start_date" placeholder=" Inserisci il nome">
+                        <input value="{{ old('start_date', \Carbon\Carbon::parse($reservation->start_date)->format('Y-m-d')) }}" type="date" name="start_date" id="start_date">
                     </p>
                     @error('start_date') <p class="error">{{ $message }}</p> @enderror
                 </div>        
@@ -127,7 +133,7 @@
                         Partenza
                     </label>
                     <p>
-                        <input value="{{ old('end_date') }}" type="date" name="end_date" id="end_date" placeholder=" Inserisci il nome">
+                        <input value="{{ old('end_date', \Carbon\Carbon::parse($reservation->end_date)->format('Y-m-d')) }}" type="date" name="end_date" id="end_date">
                     </p>
                     @error('end_date') <p class="error">{{ $message }}</p> @enderror
                 </div>        
@@ -142,6 +148,7 @@
 
                 @php
                     $status = [
+                        0 =>'Annullata', 
                         1 =>'Ricevuta', 
                         2 =>'Acconto', 
                         3 =>'Pagata',
@@ -149,7 +156,7 @@
                 @endphp
                 <select id="status" name="status" >                        
                     @foreach ($status as $k => $t)
-                        <option value="{{ $k }}" >{{ $t }}</option>
+                        <option @if ($reservation->status == $k) selected @endif value="{{ $k }}" >{{ $t }}</option>
                     @endforeach
                 </select>
                     
@@ -166,7 +173,7 @@
                     Note 
     
                 </label>
-                <textarea name="note" id="message" cols="30" rows="10" >{{ old('message') }}</textarea>
+                <textarea name="message" id="message" cols="30" rows="10" >{{ old('message', $reservation->message) }}</textarea>
                 @error('message') <p class="error">{{ $message }}</p> @enderror
             </p>
     

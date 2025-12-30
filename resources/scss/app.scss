@@ -800,6 +800,7 @@ html{
             display: flex;
             justify-content: center;
             align-items: center;
+            text-transform: capitalize;
         }
         .actions{
             display: flex;
@@ -1091,6 +1092,7 @@ html{
         position: relative;
         backdrop-filter: blur(10px);
         width: 90%;
+        max-width: 750px;
         margin: auto;
         background-color: rgba($c1, .95);
         font-size: $fs_sm_2;
@@ -3772,23 +3774,40 @@ section{
 //mappa create barca planimetria
 #map-wrapper {
     width: 100%;
-    height: 600px;
+    height: 500px;
     overflow: auto; /* SCROLL */
     border: 1px solid var(--c3);
     background-color: var(--c3);
     border-radius: 12px;
     margin-bottom: 2rem;
-}
-
-#map-viewport {
-    transform-origin: 0 0;
-}
-
-#map {
     position: relative;
-    width: 1700px;
-    height: 987px;
+
+}
+
+/* FINESTRA DI VISUALIZZAZIONE */
+#map-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+#map-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+}
+
+#map{
+    position: relative;
+    width: 3811px;
+    aspect-ratio: 1.7;
     background: url('../../mappa-porto.jpg') center / cover;
+    background: url('https://db.losbarqueros-castro.it/public/mappa-porto.jpg') center / cover;
+
 
     .boat{
         position: absolute;
@@ -3805,11 +3824,10 @@ section{
         gap: .3rem;
         transform-origin: center center;
         border-radius: 40%;
-        transition: all .24s ease-in-out;
         
         svg{
             aspect-ratio: 1;
-            width: 90%;
+            width: 50%;
             fill: var(--c3_op);
         }
     }

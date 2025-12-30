@@ -39,6 +39,16 @@ class SettingController extends Controller
         ];
         $setting['Contatti']->property = json_encode($contatti);
         $setting['Contatti']->save();      
+
+                
+        $setting['Periodo di Ferie']->status = $request->ferie_status;
+        $propertyArray = [
+            'from' => $request->from,
+            'to' => $request->to,
+        ];
+        $setting['Periodo di Ferie']->property = json_encode($propertyArray);
+        $setting['Periodo di Ferie']->save();
+
         
         $oldPosition = json_decode($setting['Posizione']['property'], 1);
 

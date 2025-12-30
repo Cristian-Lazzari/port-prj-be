@@ -36,7 +36,34 @@
 
                     </div>
 
-                </div>                    
+                </div>  
+                @php
+                    $settings['Periodo di Ferie']['property'] = json_decode($settings['Periodo di Ferie']['property'], true);
+                @endphp
+                <div class="set">
+                    <h5>Ferie</h5>
+                    <div class="set-cont">
+                        <div class="g_set">
+                            <div class="radio-inputs">
+                                <label class="radio">
+                                    <input type="radio" name="ferie_status"  @if($settings['Periodo di Ferie']['status'] == 0) checked  @endif value="0" >
+                                    <span class="name">A lavoro</span>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="ferie_status"  @if($settings['Periodo di Ferie']['status'] == 1) checked  @endif value="1" >
+                                    <span class="name">In ferie</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group mt-2 flex-nowrap">
+                            <label for="form" class="input-group-text" >Da</label>
+                            <input name="from" id="form" type="date" class="form-control" placeholder="da" @if($settings['Periodo di Ferie']['property']['from'] !== '') value="{{$settings['Periodo di Ferie']['property']['from']}}"  @endif>
+                            <label for="to" class="input-group-text" >A</label>
+                            <input name="to" id="to" type="date" class="form-control" placeholder="da" @if($settings['Periodo di Ferie']['property']['to'] !== '') value="{{$settings['Periodo di Ferie']['property']['to']}}"  @endif>
+                        </div>
+                    </div>
+                </div>                  
             </div>
             <div class="bottom-set">
                 @php 

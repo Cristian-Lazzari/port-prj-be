@@ -66,7 +66,7 @@
                 </div>        
                 <div>
                     <label class="label_c" for="draft">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Draft:
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/></svg> Pescaggio:
                     </label>
                     <p>
                         <input value="{{ old('draft', $slot->draft) }}" type="number" name="draft" id="draft" placeholder="Inserisci il pescaggio">
@@ -77,7 +77,7 @@
             <div class="split">          
                 <div>
                     <label class="label_c" for="boat-length">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Beam:
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16"><path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708z"/></svg> Larghezza:
                     </label>
                     <p>
                         <input value="{{ old('beam', $slot->beam) }}" type="number" name="beam" id="boat-length" placeholder="Inserisci la larghezza">
@@ -117,41 +117,41 @@
         </div>
 
         <div id="map-wrapper">
-            <div id="map-wrapper">
-                <div id="map-viewport">
-                    <div id="map">
+            <div id="map-viewport">
+                <div id="map">
+                    <img id="map-bg" src="https://db.losbarqueros-castro.it/public/mappa-porto.jpg" alt="Mappa porto">
+                    {{-- BARCHE ESISTENTI --}}
+                    @foreach($slots as $s)
+                        <div class="boat"
+                            data-x="{{ $s->pos_x }}"
+                            data-y="{{ $s->pos_y }}"
+                            data-w="{{ $s->beam / 7 }}"
+                            data-h="{{ $s->loa / 7 }}"
+                            data-rotation="{{ $s->rotation }}"
+                        >
+                            <svg viewBox="0 0 640 640">
+                                <path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9z"/>
+                            </svg>
+                            <span>{{ $s->name }}</span>
+                        </div>
+                    @endforeach
 
-                        {{-- barche --}}
-                        @foreach($slots as $s)
-                            <div class="boat"
-                                style="
-                                    left: {{ $s->pos_x }}px;
-                                    top: {{ $s->pos_y }}px;
-                                    width: {{ $s->beam / 5}}px;
-                                    height: {{ $s->loa / 5}}px;
-                                    transform: rotate({{ $s->rotation }}deg);
-                                ">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
-                                <span>{{ $s->name }}</span>
-                            </div>
-                        @endforeach
-                        <div id="new-boat" class="boat"
-                            style="
-                                left: {{ $slot->pos_x }}px;
-                                top: {{ $slot->pos_y }}px;
-                                width: {{ $slot->beam / 5 }}px;
-                                height: {{ $slot->loa / 5 }}px;
-                                transform: rotate({{ $slot->rotation }}deg);
-                                ">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
-                                <span>{{$slot->name}}</span>    
-                            </div>
-
+                    {{-- BARCA MODIFICABILE --}}
+                    <div id="new-boat" class="boat"
+                        data-x="{{ $slot->pos_x }}"
+                        data-y="{{ $slot->pos_y }}"
+                        data-w="{{ $slot->beam / 7 }}"
+                        data-h="{{ $slot->loa / 7 }}"
+                        data-rotation="{{ $slot->rotation }}"
+                    >
+                        <svg viewBox="0 0 640 640">
+                            <path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9z"/>
+                        </svg>
+                        <span>{{ $slot->name }}</span>
                     </div>
+
                 </div>
             </div>
-
-            
         </div>
 
         <input type="hidden" name="pos_x" id="pos_x">
@@ -167,53 +167,97 @@
     </form>
 </div>
 
+
 <script>
-/* ======================
+/* =========================
    CONFIGURAZIONE
-====================== */
-const SCALE = 0.2; // 1 metro = 10px
+========================= */
+let zoom = 0.3;
+const ZOOM_STEP = 0.02;
+const MIN_ZOOM = 0.22;
+const MAX_ZOOM = 2.1;
 
-let map = document.getElementById('map');
-let boat = document.getElementById('new-boat');
+// dimensioni REALI della mappa (uguali all’immagine)
+const BASE_MAP_WIDTH  = 3811;
+const BASE_MAP_HEIGHT = 2212;
 
-let scale = 1;
-let rotation = 0;
-let isDragging = false;
-let offsetX, offsetY;
+const map = document.getElementById('map');
+const boatEl = document.getElementById('new-boat');
 
-/* ======================
-   DIMENSIONI REALI
-====================== */
-const lengthInput = document.getElementById('boat-length');
-const widthInput = document.getElementById('boat-width');
+/* =========================
+   CACHE BARCHE
+========================= */
+const boats = [...document.querySelectorAll('.boat')].map(el => ({
+    el,
+    x: parseFloat(el.dataset.x),
+    y: parseFloat(el.dataset.y),
+    w: parseFloat(el.dataset.w),
+    h: parseFloat(el.dataset.h),
+    r: parseFloat(el.dataset.rotation)
+}));
 
-function updateBoatSize() {
-    const length = parseFloat(lengthInput.value);
-    const width = parseFloat(widthInput.value);
+let activeBoat = boats.find(b => b.el === boatEl);
 
-    if (!length || !width) return;
+/* =========================
+   RENDER ENGINE
+========================= */
+let needsRender = true;
 
-    boat.style.width = (length * SCALE) + 'px';
-    boat.style.height = (width * SCALE) + 'px';
+function render() {
+    if (!needsRender) return;
 
-    document.getElementById('length-hidden').value = length;
-    document.getElementById('width-hidden').value = width;
+    // ridimensiona mappa + sfondo
+    map.style.width  = (BASE_MAP_WIDTH * zoom) + 'px';
+    map.style.height = (BASE_MAP_HEIGHT * zoom) + 'px';
+
+    for (const b of boats) {
+        b.el.style.left   = (b.x * zoom) + 'px';
+        b.el.style.top    = (b.y * zoom) + 'px';
+        b.el.style.width  = (b.w * zoom) + 'px';
+        b.el.style.height = (b.h * zoom) + 'px';
+        b.el.style.transform = `rotate(${b.r}deg)`;
+    }
+
+    needsRender = false;
 }
 
-lengthInput.addEventListener('input', updateBoatSize);
-widthInput.addEventListener('input', updateBoatSize);
+function requestRender() {
+    if (!needsRender) {
+        needsRender = true;
+        requestAnimationFrame(render);
+    }
+}
 
-/* ======================
-   DRAG & DROP
-====================== */
-boat.addEventListener('mousedown', e => {
+render();
+
+/* =========================
+   ZOOM
+========================= */
+document.getElementById('zoom-in').onclick = () => {
+    zoom = Math.min(MAX_ZOOM, zoom + ZOOM_STEP);
+    requestRender();
+};
+
+document.getElementById('zoom-out').onclick = () => {
+    zoom = Math.max(MIN_ZOOM, zoom - ZOOM_STEP);
+    requestRender();
+};
+
+/* =========================
+   DRAG BARCA
+========================= */
+let isDragging = false;
+let offsetX = 0, offsetY = 0;
+
+boatEl.addEventListener('mousedown', e => {
     isDragging = true;
 
-    const rect = boat.getBoundingClientRect();
+    const rect = boatEl.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
 
-    boat.style.cursor = 'grabbing';
+    boatEl.style.cursor = 'grabbing';
+    boatEl.style.willChange = 'left, top';
 });
 
 document.addEventListener('mousemove', e => {
@@ -221,59 +265,47 @@ document.addEventListener('mousemove', e => {
 
     const mapRect = map.getBoundingClientRect();
 
-    let x = (e.clientX - mapRect.left - offsetX) / scale;
-    let y = (e.clientY - mapRect.top - offsetY) / scale;
+    let x = (e.clientX - mapRect.left - offsetX) / zoom;
+    let y = (e.clientY - mapRect.top  - offsetY) / zoom;
 
-    boat.style.left = x + 'px';
-    boat.style.top = y + 'px';
+    // LIMITI MAPPA (coordinate REALI)
+    const maxX = BASE_MAP_WIDTH  - activeBoat.w;
+    const maxY = BASE_MAP_HEIGHT - activeBoat.h;
 
-    document.getElementById('pos_x').value = x;
-    document.getElementById('pos_y').value = y;
+    activeBoat.x = clamp(x, 0, maxX);
+    activeBoat.y = clamp(y, 0, maxY);
+
+    document.getElementById('pos_x').value = activeBoat.x;
+    document.getElementById('pos_y').value = activeBoat.y;
+
+    requestRender();
 });
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
 
 document.addEventListener('mouseup', () => {
     isDragging = false;
-    boat.style.cursor = 'grab';
+    boatEl.style.cursor = 'grab';
+    boatEl.style.willChange = 'auto';
 });
 
-/* ======================
-   ROTAZIONE CENTRALE
-====================== */
-function applyRotation() {
-    boat.style.transform = `rotate(${rotation}deg)`;
-    document.getElementById('rotation').value = rotation;
-}
-
+/* =========================
+   ROTAZIONE
+========================= */
 document.getElementById('rotate-left').onclick = () => {
-    rotation -= 5;
-    applyRotation();
+    activeBoat.r -= 5;
+    document.getElementById('rotation').value = activeBoat.r;
+    requestRender();
 };
 
 document.getElementById('rotate-right').onclick = () => {
-    rotation += 5;
-    applyRotation();
-};
-
-/* ======================
-   ZOOM MAPPA (SCALA TUTTO)
-====================== */
-const viewport = document.getElementById('map-viewport');
-
-function applyZoom() {
-    viewport.style.transform = `scale(${scale})`;
-}
-
-document.getElementById('zoom-in').onclick = () => {
-    scale += 0.1;
-    applyZoom();
-};
-
-document.getElementById('zoom-out').onclick = () => {
-    scale = Math.max(0.5, scale - 0.1);
-    applyZoom();
+    activeBoat.r += 5;
+    document.getElementById('rotation').value = activeBoat.r;
+    requestRender();
 };
 </script>
-
 
 
 
