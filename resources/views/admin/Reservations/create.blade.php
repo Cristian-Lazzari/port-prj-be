@@ -135,26 +135,51 @@
             </div>
             <div id="date-validation-error" class="mt-3"></div>
 
-            <div class="p desc">
-                <label class="label_c" for="status">
-                    Status 
-                </label>
-
-                @php
-                    $status = [
-                        1 =>'Ricevuta', 
-                        2 =>'Acconto', 
-                        3 =>'Pagata',
-                    ]
-                @endphp
-                <select id="status" name="status" >                        
-                    @foreach ($status as $k => $t)
-                        <option value="{{ $k }}" >{{ $t }}</option>
-                    @endforeach
-                </select>
+            <div class="split">
+                <div>
+                    <label class="label_c" for="status">
+                        Status 
+                    </label>
+    
+                    @php
+                        $status = [
+                            1 =>'Ricevuta', 
+                            2 =>'Acconto', 
+                            3 =>'Pagata',
+                        ]
+                    @endphp
+                    <p>
+                        <select id="status" name="status" >                        
+                        @foreach ($status as $k => $t)
+                            <option value="{{ $k }}" >{{ $t }}</option>
+                        @endforeach
+                    </select>
+                    </p>
+                    @error('status') <p class="error">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="label_c" for="status">
+                        Metodo di pagamento 
+                    </label>
+    
+                    @php
+                        $payment = [
+                            1 =>'70% - 30%', 
+                            2 =>'50% - 50%', 
+                            3 =>'100%',
+                        ]
+                    @endphp
+                    <p>
+                        <select id="payment" name="payment" >                        
+                        @foreach ($payment as $k => $t)
+                            <option value="{{ $k }}" >{{ $t }}</option>
+                        @endforeach
+                    </select>
+                    </p>
+                    @error('status') <p class="error">{{ $message }}</p> @enderror
+                </div>
                     
 
-                @error('status') <p class="error">{{ $message }}</p> @enderror
             </div>      
 
            

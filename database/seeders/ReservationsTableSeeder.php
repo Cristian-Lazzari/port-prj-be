@@ -36,6 +36,7 @@ class ReservationsTableSeeder extends Seeder
                             'slot_id' => $slot->id,
                             'start_date' => $start,
                             'end_date' => $end,
+                            'payment' => '1',
                         ]);
                     }
                 }

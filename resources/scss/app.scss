@@ -685,7 +685,7 @@ html{
             margin-bottom: .5rem;
             font-size: $fs_sm_2;
             //flex-wrap: wrap;
-            gap: 1rem;
+            gap: 5px;
             .boat{
                 background-color: var(--c3_op);
                 color: var(--c1);
@@ -703,6 +703,9 @@ html{
                     height: 20px;
                     width: 20px;
                 }
+            }
+            .btn_delete{
+                margin-left: 5px;
             }
         }
     }

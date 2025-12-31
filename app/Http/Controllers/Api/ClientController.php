@@ -123,6 +123,7 @@ class ClientController extends Controller
         $reservation->start_date = $data['start_date'];
         $reservation->end_date = $data['end_date'];
         $reservation->message = $data['message'];
+        $reservation->payment = $data['payment'];
         $reservation->client_id = $new_client->id;
         $reservation->boat_id = $boat->id;
         $reservation->save();

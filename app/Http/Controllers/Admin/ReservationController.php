@@ -53,6 +53,7 @@ class ReservationController extends Controller
         $newReservation->start_date = Carbon::parse($data['start_date']);
         $newReservation->end_date = Carbon::parse($data['end_date']);
         $newReservation->status = $data['status'];
+        $newReservation->payment = $data['payment'];
         $newReservation->message = $data['message'] ?? null;
         $newReservation->save();
 
@@ -91,6 +92,7 @@ class ReservationController extends Controller
         $reservation->start_date = Carbon::parse($data['start_date']);
         $reservation->end_date = Carbon::parse($data['end_date']);
         $reservation->status = $data['status'];
+        $reservation->payment = $data['payment'];
         $reservation->message = $data['message'] ?? null;
         $reservation->save();
 

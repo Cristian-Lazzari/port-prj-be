@@ -40,6 +40,7 @@ return new class extends Migration
 
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->string('payment');
 
             $table->string('status')->default('1');
             // 1 ricevuta, 2 acconto, 3 pagata, 0 cancellata

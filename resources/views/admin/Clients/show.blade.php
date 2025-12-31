@@ -76,7 +76,7 @@
         @else
             <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha prenotato nessuno slot</h2>
         @endif
-        <div class="info_box_day">
+        <div class="info_box_day mb-3">
             @foreach ($client->reservations as $r)
             @php
                 $formatter = new IntlDateFormatter(
@@ -118,8 +118,20 @@
             <h2 class="mt-5">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 99.9L304 448L80 448C71.2 448 64 455.2 64 464C64 525.9 114.1 576 176 576L464 576C525.9 576 576 525.9 576 464C576 455.2 568.8 448 560 448L352 448L352 400L513.7 400C526.6 400 534.2 385.6 526.9 375L333.2 90.9C324.3 77.9 304 84.2 304 99.9zM256 384L256 199.8C256 183.7 235 177.7 226.4 191.3L111.3 375.5C104.6 386.2 112.3 400 124.9 400L240 400C248.8 400 256 392.8 256 384z"/></svg>
                 Imbarcazioni di <strong>{{$client->name}} {{$client->surnname}}</strong> </h2>
+            <button class="my_btn_5 w-auto mx-auto mb-4" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                    </svg>
+                Aggiungi imbarcazione
+            </button>
         @else
-            <h2><strong>{{$client->name}} {{$client->surnname}}</strong> non ha ancora registrato imbarcazioni</h2>
+            <h2><strong>{{$client->name}} {{$client->surnname}}</strong> Non ha ancora registrato imbarcazioni</h2>
+            <button class="my_btn_5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                    </svg>
+                Aggiungi imbarcazione
+            </button>
         @endif
         {{-- barche elenco --}}
         <div class="info_box_day">
@@ -138,10 +150,10 @@
                 <div class="top">
                     <div class="client">ID: {{$b->serial_code}}</div>
                     <div class="boat">{{$b->model}}</div>
-                    <button class="my_btn_6 btn_delete" type="button" data-bs-toggle="modal" data-bs-target="#delete{{$b->id}}" >
+                    <button class="my_btn_2 btn_delete" type="button" data-bs-toggle="modal" data-bs-target="#delete{{$b->id}}" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/></svg>
                     </button>
-                    <button class="my_btn_6" type="button" data-bs-toggle="modal" data-bs-target="#show{{$b->id}}">
+                    <button class="my_btn_3" type="button" data-bs-toggle="modal" data-bs-target="#show{{$b->id}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>
                     </button>
                 </div>
@@ -281,12 +293,7 @@
             @endforeach
         </div>
 
-        <button class="my_btn_5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                </svg>
-            Aggiungi imbarcazione
-        </button>
+        
 
         <div class="more_info my-3" >
             <p>
