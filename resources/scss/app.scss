@@ -3250,7 +3250,8 @@ section{
         }
         textarea:focus, textarea:hover{
             //background: linear-gradient(-25deg, #09033300 10%, var(--c3_op_3)40%, #09033300 60%, var(--c3_op_3));
-            border: 2px solid var(--c2);
+            border: 2px solid var(--c2) !important;
+            color: var(--c3) !important; 
             box-shadow: 0 0 3px var(--c2);
             outline: none;
             opacity: 1;
@@ -4180,9 +4181,6 @@ section{
         flex-wrap: wrap;
         h3{
             width: 100%;
-        }
-        input{
-            //min-width: 200px;
         }
         .new{
             display: none;

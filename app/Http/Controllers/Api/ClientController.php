@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use Carbon\Carbon;
 use App\Models\Boat;
 use App\Mail\otpUser;
+use App\Models\Model;
 use App\Models\Client;
 use App\Models\Setting;
+use App\Mail\BuildableMail;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -127,6 +129,34 @@ class ClientController extends Controller
         $reservation->client_id = $new_client->id;
         $reservation->boat_id = $boat->id;
         $reservation->save();
+
+
+        $model = Model::where('name','Conferma registrazione')->first();
+
+        
+        $vars = [
+            'nome_cliente'   => $new_client->name,
+            'cognome_cliente'=> $new_client->surname,
+            'data_inizio'    => $reservation->start_date->format('d/m/Y'),
+            'data_fine'      => $reservation->end_date->format('d/m/Y'),
+        ];
+        $body = $this->parseTemplate($model->body, $vars);
+        $contentMail = [
+            'name' => '',
+            'object' => $model->object,
+            'heading' => $model->heading,
+            'body' => explode("/*/", $body),
+            'ending' => $model->ending,
+            'sender' => $model->sender,
+            'img_1' => $model->img_1,
+            'img_2' => $model->img_2,
+        ];
+
+        $mail = new BuildableMail($contentMail);
+        Mail::to($data['mail'])->send($mail);
+
+
+    
         
         return response()->json([
             'success' => true,
@@ -135,5 +165,13 @@ class ClientController extends Controller
             'boat' => $boat,
             'reservation' => $reservation
         ]);
+    }
+    function parseTemplate(string $text, array $data): string
+    {
+        foreach ($data as $key => $value) {
+            $text = str_replace('{{'.$key.'}}', $value, $text);
+        }
+
+        return $text;
     }
 }

@@ -41,7 +41,7 @@
                     $settings['Periodo di Ferie']['property'] = json_decode($settings['Periodo di Ferie']['property'], true);
                 @endphp
                 <div class="set">
-                    <h5>Ferie</h5>
+                    <h4>Ferie</h4>
                     <div class="set-cont">
                         <div class="g_set">
                             <div class="radio-inputs">
@@ -63,8 +63,17 @@
                             <input name="to" id="to" type="date" class="form-control" placeholder="da" @if($settings['Periodo di Ferie']['property']['to'] !== '') value="{{$settings['Periodo di Ferie']['property']['to']}}"  @endif>
                         </div>
                     </div>
+                </div>
+                <div class="set">
+                    <h4>Gestione Mail</h4>
+                    <div class="se-cont">
+                        <div class="g_set">
+                            <a href="{{route('admin.mailer.index')}}" class="my_btn_1">Vedi Modelli</a>
+                        </div>
+                    </div>
                 </div>                  
             </div>
+
             <div class="bottom-set">
                 @php 
                     $property_contatti = json_decode($settings['Contatti']['property'], true);

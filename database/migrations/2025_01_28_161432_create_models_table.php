@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('models', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->string('name', 50)->unique();
             $table->string('object', 150);
             $table->string('heading', 150);
             $table->text('body');
@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('sender', 50);
             $table->string('img_1')->nullable();
             $table->string('img_2')->nullable();
+            $table->string('available_vars')->nullable();
+            // $table->string('attached')->nullable();
+
             $table->timestamps();
         });
     }

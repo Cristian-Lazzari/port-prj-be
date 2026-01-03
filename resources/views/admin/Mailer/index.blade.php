@@ -28,7 +28,7 @@
 @endif
 {{-- compact('models', 'last_mail_list', 'extra_mail_list', 'users', 'order_users', 'reservation_users'));    --}}
 
-<div class="email-m pt-5">
+<div class="email-m page_nav">
     
     <h1 class="mt-5 ">Email Marketing</h1>
     <section class="lists">

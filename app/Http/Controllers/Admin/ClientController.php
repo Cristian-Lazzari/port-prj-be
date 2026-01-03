@@ -129,7 +129,7 @@ class ClientController extends Controller
         $client->boats()->delete();
         $client->delete();
 
-        $m = 'Il cliente  "' . $client->name . ' ' . $client->name . ' è stato eliminato correttamente';
+        $m = 'Il cliente  "' . $client->name . ' ' . $client->name . '" è stato eliminato correttamente';
         return to_route('admin.clients.index')->with('message', $m);      
     }
 }

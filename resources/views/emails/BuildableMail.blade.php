@@ -45,7 +45,6 @@
                             
                             {{-- corpo --}}
                             <div style="margin: 30px 25px; font-size: 20px; color: #04001d; text-align:start" class="corpo">
-                                <span style="text-align:start; color: #04001d;" >Ciao {{$content_mail['name']}},</span>
                                 @foreach ($content_mail['body'] as $b)
                                 <p style="text-align:start; color: #04001d;" >{!! nl2br(e(str_replace('\n', " ", $b))) !!}</p>
                                 @endforeach
@@ -60,21 +59,10 @@
                             {{-- ending --}}
                             <p style="color: #04001d; font-size: 22px; text-align: center; margin: 30px;">{!! nl2br(e(str_replace('\n', " ", $content_mail['ending']))) !!}</p>
                             
-                            <table cellspacing="0" cellpadding="0" border="0" align="center">
-                                <p style="color: #04001d; font-size: 18px; text-align: center; margin: 20px;">Se non vuoi perdere tempo e pensi di sapere già quello che ti serve o se vuoi avere maggiori informazioni sul nostro servizio prenota un call gratuita con i nostri consulenti</p>
-                                <tr>
-                                  <td align="center"  >
-                                    <a href="https://calendly.com/futureplus-commerciale/scopri-come-restaurant-puo-svoltare-il-tuo-lavoro" target="_blank" 
-                                       style="display: inline-block; font-weight: 800; font-size: 18px; color: #e9f0fb; text-decoration: none; padding: 10px 24px; border-radius: 10px; background-color: #04001d;">
-                                        PRENOTA UNA CALL
-                                    </a>
-                                  </td>
-                                </tr>
-                              </table>
                     
                             <div class="sender" style="color: #04001d; margin: 50px 0">
                                 <p style="font-weight: 900; font-size: 18px; margin: 1rem 2rem 0">{{$content_mail['sender']}}</p>
-                                <p style="font-size: 18px; margin: 1rem 2rem 1rem" class="date">Tel/Wa:  <a style="font-weight: 800; color: #04001d; text-decoration:none" href="tel:393271622244">+39 3271622244</a></p>
+                                <p style="font-size: 18px; margin: 1rem 2rem 1rem" class="date">Tel/Wa:  <a style="font-weight: 800; color: #04001d; text-decoration:none" href={{"tel:" . $content_mail['admin_phone']}}>{{$content_mail['admin_phone']}}</a></p>
                                 <p style="font-style: italic; font-size: 15px; margin: 0 2rem 2rem; color: #04001db3;" class="date">{{$formatter->format($dataOdierna)}}</p>
                             </div>
                         </td>
@@ -87,15 +75,6 @@
 
 
     <footer style=" margin: 50px 0 0; background-color: #090333; color: white; padding: 10px 20px; text-align: center; font-size: 12px;">
-        <h5 style="font-size: 16px; margin: 5px 0 8px;">Seguici sui social</h5>
-        <div style="padding: 0 0 20px "> 
-            <a style="color: white; text-decoration: none; margin: 0 auto;" href="https://www.facebook.com/profile.php?id=61558817374447">
-                Facebook: <span style="color: white; font-weight: 900"> Future plus</span>
-            </a>
-            <a style="color: white; text-decoration: none; margin: 0 auto;" href="https://www.instagram.com/future.plus_/?hl=it">
-                Instagram: <span style="color: white; font-weight: 900"> @future.plus_</span>
-            </a>
-        </div>
         <p style="font-size: 12px; font-family: monospace; line-height: 1.5; margin: 10px 5px;">&copy; 2024 {{ config('configurazione.APP_NAME') }}. Tutti i diritti riservati.</p>
         <p style="font-size: 15px; line-height: 1.5; margin: 5px;" > Powered by <a style="color: white; text-decoration: none; font-weight:900;" href="https://future-plus.it">Future +</a></p>
     </footer>

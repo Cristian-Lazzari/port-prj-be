@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\BoatsTableSeeder;
 use Database\Seeders\SlotsTableSeeder;
 use Database\Seeders\UsersTableSeeder;
+use Database\Seeders\ModelsTableSeeder;
 use Database\Seeders\ClientsTableSeeder;
 use Database\Seeders\SettingsTableSeeder;
 use Database\Seeders\ReservationsTableSeeder;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             BoatsTableSeeder::class,
             SlotsTableSeeder::class,
             ReservationsTableSeeder::class,
+            ModelsTableSeeder::class,
         ]);
 
     }

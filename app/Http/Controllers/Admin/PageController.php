@@ -78,6 +78,8 @@ class PageController extends Controller
         $now = Carbon::now();
         
         $first_day = $firstDate->diffInDays($now) < 0 ? $now : $firstDate;
+
+       
         
         $day_in_calendar = $firstDate->diffInDays($lastDate) + 90; // giorni da mostrare dalla prima a 90 giorni da oggi
 
@@ -108,25 +110,28 @@ class PageController extends Controller
             $days[] = $day;    
             $first_day->addDay();
         }
+       // dd($days);
         
         $result = [];
 
         foreach ($days as $day) {
-            $monthNumber = $day['month'];
-            $year = $day['year'];
+            $month = (int) $day['month'];
+            $year  = (int) $day['year'];
 
-            // se il mese non esiste ancora, inizializzalo
-            if (!isset($result[$monthNumber])) {
-                $result[$monthNumber] = [
-                    'year' => $year,
-                    'month' => $monthNumber,
-                    'days' => []
+            // chiave tecnica unica (non cambia la struttura finale)
+            $key = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+
+            if (!isset($result[$key])) {
+                $result[$key] = [
+                    'year'  => $year,
+                    'month' => $month,
+                    'days'  => []
                 ];
             }
 
-            // aggiungi il giorno dentro il mese corrispondente
-            $result[$monthNumber]['days'][] = $day;
+            $result[$key]['days'][] = $day;
         }
+
 
          //dd($result);
         return array_values($result);
