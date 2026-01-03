@@ -9,20 +9,62 @@ class SlotsTableSeeder extends Seeder
 {
     public function run()
     {
-        $slotNames = ['A01','A02','B01','B02','C01','C02'];
 
-        foreach ($slotNames as $name) {
+
+        for ($i=1; $i < 24; $i++) { 
             Slot::create([
-                'name' => $name,
-                'price' => rand(50, 100),    // prezzo
-                'draft' => rand(10, 20),   // max pescaggio
-                'beam' => rand(240, 550),    // 
-                'loa' => rand(840, 2000),     // 
-                'pos_y' => rand(500, 700),
-                'pos_x' => rand(270, 900),    
-                'rotation' =>5,
-
+                'name' => 'A' . sprintf('%02d', $i),
+                'price' => 0,    // prezzo
+                'draft' => 0,   // max pescaggio
+                'loa' => 900,    // 
+                'beam' => 250,     // 
+                'pos_y' => 900 + ($i * 2),
+                'pos_x' => 240 + ($i * 55),    
+                'rotation' =>2,
+    
             ]);
         }
+        for ($i=1; $i < 12; $i++) { 
+            Slot::create([
+                'name' => 'B' . sprintf('%02d', $i),
+                'price' => 0,    // prezzo
+                'draft' => 0,   // max pescaggio
+                'loa' => 900,    // 
+                'beam' => 250,     // 
+                'pos_y' => 800,
+                'pos_x' => 1700 + ($i * 50),    
+                'rotation' =>2,
+    
+            ]);
+        }
+        for ($i=12; $i < 24; $i++) { 
+            Slot::create([
+                'name' => 'B' . sprintf('%02d', $i),
+                'price' => 0,    // prezzo
+                'draft' => 0,   // max pescaggio
+                'loa' => 900,    // 
+                'beam' => 250,     // 
+                'pos_y' =>1000,
+                'pos_x' => 1200 + ($i * 50),    
+                'rotation' =>2,
+    
+            ]);
+        }
+        for ($i=1; $i < 12; $i++) { 
+            Slot::create([
+                'name' => 'C' . sprintf('%02d', $i),
+                'price' => 0,    // prezzo
+                'draft' => 0,   // max pescaggio
+                'loa' => 900,    // 
+                'beam' => 250,     // 
+                'pos_y' => 1480,
+                'pos_x' => 1800 + ($i * 50),    
+                'rotation' =>2,
+    
+            ]);
+        }
+        $i=0;
+
+
     }
 }

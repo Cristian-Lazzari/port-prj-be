@@ -78,6 +78,7 @@
                 <div class="model">
                     <div class="name my_btn_4 mb-4">{{$m['name']}}</div>
         
+                    <p>Oggetto: <strong> {{$m['object']}}</strong> </p>
                     <h1>{{$m['heading']}}</h1>
                 
                     @if($m['img_1'] !== NULL)   

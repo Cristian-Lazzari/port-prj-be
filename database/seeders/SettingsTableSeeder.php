@@ -14,45 +14,45 @@ class SettingsTableSeeder extends Seeder
         
         
      
-            $settings = [
-                [
-                    'name' => 'Servizio di Prenotazione Online',  
-                    'status' => 0,
-                    'property' => []
-                ],
-                [
-                    'name' => 'Periodo di Ferie',  
-                    'status' => 0,
-                    'property' => [
-                        'from' => '',
-                        'to' => '',
-                    ]
-                ],
-                [
-                    'name' => 'Contatti',
-                    'property' => [
-                        'phone' => '3271622244',
-                        'email' => '',
-                        'whatsapp' => '',
-                        'youtube' => '',
-                        'instagram' => '',
-                        'tiktok' => '',
-                    ]
-                ],
-                [
-                    'name' => 'Posizione',
-                    'property' => []
-                ],
-                [
-                    'name' => 'advanced',
-                    'property' => [
-                        'max_delay_default' => 24,
-                        'day_off' => [],
-                        'field_set'=> [],
-                    ]
-                ],
-                
-            ];
+        $settings = [
+            [
+                'name' => 'Servizio di Prenotazione Online',  
+                'status' => 0,
+                'property' => []
+            ],
+            [
+                'name' => 'Periodo di Ferie',  
+                'status' => 0,
+                'property' => [
+                    'from' => '',
+                    'to' => '',
+                ]
+            ],
+            [
+                'name' => 'Contatti',
+                'property' => [
+                    'phone' => '3271622244',
+                    'email' => '',
+                    'whatsapp' => '',
+                    'youtube' => '',
+                    'instagram' => '',
+                    'tiktok' => '',
+                ]
+            ],
+            [
+                'name' => 'Posizione',
+                'property' => []
+            ],
+            [
+                'name' => 'advanced',
+                'property' => [
+                    'max_delay_default' => 24,
+                    'day_off' => [],
+                    'field_set'=> [],
+                ]
+            ],
+            
+        ];
       
 
         foreach ($settings as $s) {
