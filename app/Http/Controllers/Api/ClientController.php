@@ -151,7 +151,7 @@ class ClientController extends Controller
             mkdir($pdfFolder, 0755, true); // true = crea anche eventuali sottocartelle mancanti
         }
 
-        $pdfPath = $pdfFolder.'/contract_'.$booking->id.'.pdf';
+        $pdfPath = $pdfFolder.'/contract_'.$reservation->id.'.pdf';
         $pdf->save($pdfPath);
         
         $vars = [
