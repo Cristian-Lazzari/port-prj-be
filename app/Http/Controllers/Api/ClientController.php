@@ -135,6 +135,7 @@ class ClientController extends Controller
         $model = Model::where('name','Conferma registrazione')->first();
 
         $contractHtml = json_decode(Setting::where('name', 'advanced')->first()->property, 1)['contract_body'];
+        $admin_phone = json_decode(Setting::where('name', 'Contatti')->first()->property, 1)['phone'];
 
         $variables = [
             '{{nome_cliente}}' => $new_client->name,
@@ -170,6 +171,8 @@ class ClientController extends Controller
             'sender' => $model->sender,
             'img_1' => $model->img_1,
             'img_2' => $model->img_2,
+            'admin_phone' => $admin_phone,
+
         ];
 
         $mail = new BuildableMail($contentMail);
@@ -179,10 +182,6 @@ class ClientController extends Controller
                 'mime' => 'application/pdf'
             ]);
 
-        $setting = Setting::where('name', 'advanced')->first();
-        $data = json_decode($setting->property, true);
-
-        $contractHtml = $data['contract_body'];
 
 
 
