@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SlotController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\MailerController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Guests\PageController as GuestsPageController;
@@ -32,6 +33,10 @@ Route::middleware(['auth', 'verified'])
         Route::get('/settings',            [SettingController::class, 'index'])->name('settings');
 
 
+
+        Route::get('/contract/index',           [ContractController::class, 'contract'])->name('contract.index');
+        Route::get('/contract/edit',            [ContractController::class, 'edit'])->name('contract.edit');
+        Route::post('/contract/update',         [ContractController::class, 'update'])->name('contract.update');
 
         Route::get('/mailer/index',         [MailerController::class, 'mailer'])->name('mailer.index');
         Route::get('/mailer/send_mail',     [MailerController::class, 'send_mail'])->name('mailer.send_mail');

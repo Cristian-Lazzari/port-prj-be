@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Mail\BuildableMail;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -133,6 +134,20 @@ class ClientController extends Controller
 
         $model = Model::where('name','Conferma registrazione')->first();
 
+        $contractHtml = json_decode(Setting::where('name', 'advanced')->first()->property, 1)['contract_body'];
+
+        $variables = [
+            '{{nome_cliente}}' => $new_client->name,
+        ];
+
+        foreach($variables as $key => $value) {
+            $contractHtml = str_replace($key, $value, $contractHtml);
+        }
+        
+        $pdf = Pdf::loadHTML($contractHtml)->setPaper('A4', 'portrait');
+        // Se vuoi salvare temporaneamente
+        $pdfPath = storage_path('app/temp/contract_'.$reservation->id.'.pdf');
+        $pdf->save($pdfPath);
         
         $vars = [
             'nome_cliente'   => $new_client->name,
@@ -153,7 +168,23 @@ class ClientController extends Controller
         ];
 
         $mail = new BuildableMail($contentMail);
-        Mail::to($data['mail'])->send($mail);
+        Mail::to($data['mail'])->send($mail)->subject($model->object)
+            ->attach($pdfPath, [
+                'as' => 'Contratto.pdf',
+                'mime' => 'application/pdf'
+            ]);
+
+        $setting = Setting::where('name', 'advanced')->first();
+        $data = json_decode($setting->property, true);
+
+        $contractHtml = $data['contract_body'];
+
+
+
+        foreach($variables as $key => $value) {
+            $contractHtml = str_replace($key, $value, $contractHtml);
+        }
+
 
 
     

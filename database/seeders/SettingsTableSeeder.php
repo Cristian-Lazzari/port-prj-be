@@ -48,7 +48,8 @@ class SettingsTableSeeder extends Seeder
                 'property' => [
                     'max_delay_default' => 24,
                     'day_off' => [],
-                    'field_set'=> [],
+                    'contract_body' => '',
+                    'contract_path' => '',
                 ]
             ],
             
