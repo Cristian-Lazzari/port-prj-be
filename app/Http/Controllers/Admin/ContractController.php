@@ -17,7 +17,7 @@ class ContractController extends Controller
         //dd($contract_body);
         $availableVariables = [ 'nome_cliente', 'mail_cliente' ];
 
-        return view('admin.contract.edit', [
+        return view('admin.Contract.edit', [
             'contract' => $contract_body,
             'variables' => $availableVariables,
         ]);
