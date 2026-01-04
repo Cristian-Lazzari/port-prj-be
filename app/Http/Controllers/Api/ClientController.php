@@ -146,7 +146,12 @@ class ClientController extends Controller
         
         $pdf = Pdf::loadHTML($contractHtml)->setPaper('A4', 'portrait');
         // Se vuoi salvare temporaneamente
-        $pdfPath = storage_path('app/temp/contract_'.$reservation->id.'.pdf');
+        $pdfFolder = storage_path('app/temp');
+        if(!file_exists($pdfFolder)) {
+            mkdir($pdfFolder, 0755, true); // true = crea anche eventuali sottocartelle mancanti
+        }
+
+        $pdfPath = $pdfFolder.'/contract_'.$booking->id.'.pdf';
         $pdf->save($pdfPath);
         
         $vars = [
