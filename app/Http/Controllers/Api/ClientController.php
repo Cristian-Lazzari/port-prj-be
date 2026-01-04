@@ -172,15 +172,11 @@ class ClientController extends Controller
             'img_1' => $model->img_1,
             'img_2' => $model->img_2,
             'admin_phone' => $admin_phone,
-
+            'filePath' => $pdfPath,
         ];
 
         $mail = new BuildableMail($contentMail);
-        Mail::to($data['mail'])->send($mail)
-            ->attach($pdfPath, [
-                'as' => 'Contratto.pdf',
-                'mime' => 'application/pdf'
-            ]);
+        Mail::to($data['mail'])->send($mail);
 
 
 

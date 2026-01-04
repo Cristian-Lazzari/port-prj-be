@@ -20,14 +20,23 @@ class BuildableMail extends Mailable
     public function __construct($content_mail)
     {
         $this->content_mail = $content_mail;
-
     }
 
 
     public function build()
     {
-        return $this->subject($this->content_mail['object'])
-            ->view('emails.BuildableMail');
+        if($this->content_mail['filePath'] == false){
+            return $this->subject($this->content_mail['object'])
+                ->view('emails.BuildableMail');
+        }else{
+            return $this->subject($this->content_mail['object'])
+                ->view('emails.BuildableMail')
+                ->attach($this->content_mail['filePath'], [
+                    'as' => 'Contratto_FuturePlus.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+
+        }
     }
 
     /**

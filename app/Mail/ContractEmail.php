@@ -16,6 +16,7 @@ class ContractEmail extends Mailable
     public $filePath;
     public $consumer;
 
+
     public function __construct($filePath, $consumer)
     {
         $this->filePath = $filePath;
