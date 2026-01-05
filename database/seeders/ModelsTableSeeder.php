@@ -17,39 +17,60 @@ class ModelsTableSeeder extends Seeder
     {
         $settings = [
             [
-                'name' => 'Conferma registrazione',  
-                'object' => 'Conferma registrazione',  
-                'heading' => '',
-                'body' => 'La informiamo che la registrazione al nostro sito è avvenuta correttamente e che la prenotazione è stata presa in carico con successo. /*/  La attendiamo presso il nostro locale secondo i dettagli indicati al momento della prenotazione. /*/ Attraverso il suo account potrà consultare in qualsiasi momento le informazioni relative alla prenotazione ed eventuali servizi disponibili./*/ Cordiali saluti,',
-                'ending' => 'Per qualsiasi necessità o richiesta di modifica, la invitiamo a contattare direttamente il locale.',
-                'sender' => 'La direzione',
-                'available_vars' => ['nome_cliente','cognome_cliente', 'data_inizio', 'data_fine'],
-                'img_1' => '',
-                'img_2' => '',
+                'name' => 'Registrazione cliente',
+                'object' => 'Prenotazione ricevuta',
+                'heading' => 'La tua prenotazione è in elaborazione',
+                'body' => 'Ciao {{nome_cliente}} {{cognome_cliente}},\n\n abbiamo ricevuto correttamente la tua prenotazione presso il porto.\n Attualmente la prenotazione è <strong>in fase di elaborazione</strong> e sarà verificata dal nostro staff.\n\n Periodo richiesto: <strong>dal {{data_inizio}} al {{data_fine}}</strong>.\n\n Riceverai una nuova comunicazione non appena la prenotazione verrà confermata.',
+                'ending' => 'Grazie per la tua richiesta.\nLo staff del porto',
+                'sender' => 'Porto',
+                'available_vars' => ['nome_cliente', 'cognome_cliente', 'data_inizio', 'data_fine'],
+            ],
+
+            [
+                'name' => 'Registrazione cliente - interna',
+                'object' => 'Nuovo utente registrato al porto',
+                'heading' => 'Nuova registrazione ricevuta',
+                'body' => 'Un nuovo utente si è registrato al porto.\n\n Nome: {{nome_cliente}} {{cognome_cliente}}\n Periodo prenotato: <strong>dal {{data_inizio}} al {{data_fine}}</strong>.\n\n Accedi al gestionale per visualizzare i dettagli della barca e della prenotazione.',
+                'ending' => 'Notifica automatica dal sistema di gestione del porto',
+                'sender' => 'Sistema Porto',
+                'available_vars' => ['nome_cliente', 'cognome_cliente', 'data_inizio', 'data_fine'],
             ],
             [
-                'name' => 'Conferma registrazione - Admin',  
-                'object' => 'Nuova registrazione e prenotazione ricevuta',  
-                'heading' => 'È stata effettuata una nuova registrazione al sito con contestuale prenotazione.',
-                'body' => 'La prenotazione è stata inserita correttamente nel sistema ed è ora visibile dal pannello di gestione, dove è possibile consultarne i dettagli ed effettuare eventuali modifiche. /*/ Si invita lo staff a verificare la disponibilità e a gestire la prenotazione secondo le procedure interne del locale.',
-                'ending' => 'Per qualsiasi necessità o richiesta di modifica, la invitiamo a contattare direttamente il locale.',
-                'sender' => 'sistema automatico',
+                'name' => 'Annullamento cliente',
+                'object' => 'Prenotazione annullata',
+                'heading' => 'La tua prenotazione è stata annullata',
+                'body' => 'Ciao {{nome_cliente}} {{cognome_cliente}},\n\n ti confermiamo che la tua prenotazione presso il porto è stata annullata.\n\n Periodo precedentemente prenotato: <strong>dal {{data_inizio}} al {{data_fine}}</strong>.\n\n Se l’annullamento non è stato effettuato da te, contatta subito il nostro staff.',
+                'ending' => 'Restiamo a tua disposizione.\nLo staff del porto',
+                'sender' => 'Porto',
                 'available_vars' => ['nome_cliente', 'cognome_cliente', 'data_inizio', 'data_fine'],
-                'img_1' => '',
-                'img_2' => '',
             ],
-            // [
-            //     'name' => 'Accesso avvenuto',  
-            //     'object' => 'Conferma registrazione',  
-            //     'heading' => '',
-            //     'body' => '',
-            //     'ending' => '',
-            //     'sender' => '',
-            //     'img_1' => '',
-            //     'img_2' => '',
-            // ],
+            [
+                'name' => 'Annullamento - interna',
+                'object' => 'Prenotazione annullata da un cliente',
+                'heading' => 'Prenotazione annullata',
+                'body' => 'Un cliente ha annullato una prenotazione.\n\n Nome: {{nome_cliente}} {{cognome_cliente}}\n Periodo annullato: <strong>dal {{data_inizio}} al {{data_fine}}</strong>.\n\n Accedi al gestionale per verificare la disponibilità degli slot.',
+                'ending' => 'Notifica automatica dal sistema',
+                'sender' => 'Sistema Porto',
+                'available_vars' => ['nome_cliente', 'cognome_cliente', 'data_inizio', 'data_fine'],
+            ],
+            [
+                'name' => 'Prenotazione accettata cliente',
+                'object' => 'Prenotazione confermata',
+                'heading' => 'La tua prenotazione è stata accettata',
+                'body' => 'Ciao {{nome_cliente}} {{cognome_cliente}},\n\n siamo lieti di informarti che la tua prenotazione presso il porto è stata <strong>accettata e confermata</strong>.\n\n Periodo confermato: <strong>dal {{data_inizio}} al {{data_fine}}</strong>.\n Barca: <strong>{{nome_barca}}</strong>\n Slot assegnato: <strong>{{slot}}</strong>\n\n Lo slot <strong>{{slot}}</strong> è stato assegnato all’imbarcazione <strong>{{nome_barca}}</strong>.\n\n Ti aspettiamo in porto per l’arrivo della tua imbarcazione.',
+                'ending' => 'Buona navigazione.\nLo staff del porto',
+                'sender' => 'Porto',
+                'available_vars' => [
+                    'nome_cliente',
+                    'cognome_cliente',
+                    'data_inizio',
+                    'data_fine',
+                    'nome_barca',
+                    'slot'
+                ],
+            ],
+
         
-            
         ];
       
 

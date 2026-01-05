@@ -74,9 +74,10 @@
                 </div>                  
                 <div class="set">
                     <h4>Contratto Cliente</h4>
-                    <div>
-                        <a href="{{route('admin.contract.index')}}" class="my_btn_4 mb-2">Vedi </a>
-                        <a href="{{route('admin.contract.edit')}}" class="my_btn_7">Modifica</a>
+                    <div class="stat">
+                        <div class="btns">
+                            <a href="{{route('admin.contract.edit')}}" class="my_btn_7">Modifica</a>
+                        </div>
                     </div>
                 </div>                  
             </div>

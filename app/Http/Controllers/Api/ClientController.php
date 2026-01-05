@@ -132,7 +132,7 @@ class ClientController extends Controller
         $reservation->save();
 
 
-        $model = Model::where('name','Conferma registrazione')->first();
+        $model = Model::where('name', 'Registrazione cliente')->first();
 
         $contractHtml = json_decode(Setting::where('name', 'advanced')->first()->property, 1)['contract_body'];
         $admin_phone = json_decode(Setting::where('name', 'Contatti')->first()->property, 1)['phone'];

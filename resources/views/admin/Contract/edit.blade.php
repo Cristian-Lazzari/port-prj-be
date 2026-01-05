@@ -31,8 +31,6 @@
 
         <form method="POST" action="{{ route('admin.contract.update') }}">
             @csrf
-            <h3>Contenuto contratto</h3>
-
                 {{-- TOOLBAR --}}
             <div class="map_toolbar">
                 <button type="button" data-cmd="bold">
@@ -74,16 +72,23 @@
                 <button type="button" data-cmd="insertOrderedList">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ol" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5"/> <path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635z"/></svg>
                 </button>
-                <div></div>
-                <button type="button" data-cmd="insertLineBreak">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paragraph" viewBox="0 0 16 16"> <path d="M10.5 15a.5.5 0 0 1-.5-.5V2H9v12.5a.5.5 0 0 1-1 0V9H7a4 4 0 1 1 0-8h5.5a.5.5 0 0 1 0 1H11v12.5a.5.5 0 0 1-.5.5"/> </svg>
-                </button>
-{{-- 
-                 <button type="button" id="fontMinus">A−</button>
-                <span id="fontLabel">12pt</span>
-                <button type="button" id="fontPlus">A+</button> --}}
             </div>
-
+            <div class="variables">
+                <p>Variabili inseribili nel corpo:</p>
+                @foreach ($variables as $key => $value)
+                    @php
+                        $placeholder = '{{' . $value . '}}';
+                    @endphp
+                    <button class="copy-button" type="button" data-copy="{{ $placeholder }}">
+                        <span>
+                            <svg width="12"height="12"fill="#090333"xmlns="http://www.w3.org/2000/svg"shape-rendering="geometricPrecision"text-rendering="geometricPrecision"image-rendering="optimizeQuality"fill-rule="evenodd"clip-rule="evenodd"viewBox="0 0 467 512.22" > <path fill-rule="nonzero" d="M131.07 372.11c.37 1 .57 2.08.57 3.2 0 1.13-.2 2.21-.57 3.21v75.91c0 10.74 4.41 20.53 11.5 27.62s16.87 11.49 27.62 11.49h239.02c10.75 0 20.53-4.4 27.62-11.49s11.49-16.88 11.49-27.62V152.42c0-10.55-4.21-20.15-11.02-27.18l-.47-.43c-7.09-7.09-16.87-11.5-27.62-11.5H170.19c-10.75 0-20.53 4.41-27.62 11.5s-11.5 16.87-11.5 27.61v219.69zm-18.67 12.54H57.23c-15.82 0-30.1-6.58-40.45-17.11C6.41 356.97 0 342.4 0 326.52V57.79c0-15.86 6.5-30.3 16.97-40.78l.04-.04C27.51 6.49 41.94 0 57.79 0h243.63c15.87 0 30.3 6.51 40.77 16.98l.03.03c10.48 10.48 16.99 24.93 16.99 40.78v36.85h50c15.9 0 30.36 6.5 40.82 16.96l.54.58c10.15 10.44 16.43 24.66 16.43 40.24v302.01c0 15.9-6.5 30.36-16.96 40.82-10.47 10.47-24.93 16.97-40.83 16.97H170.19c-15.9 0-30.35-6.5-40.82-16.97-10.47-10.46-16.97-24.92-16.97-40.82v-69.78zM340.54 94.64V57.79c0-10.74-4.41-20.53-11.5-27.63-7.09-7.08-16.86-11.48-27.62-11.48H57.79c-10.78 0-20.56 4.38-27.62 11.45l-.04.04c-7.06 7.06-11.45 16.84-11.45 27.62v268.73c0 10.86 4.34 20.79 11.38 27.97 6.95 7.07 16.54 11.49 27.17 11.49h55.17V152.42c0-15.9 6.5-30.35 16.97-40.82 10.47-10.47 24.92-16.96 40.82-16.96h170.35z"></path> </svg>
+                           {{ $placeholder }}
+                        </span>
+                        <span>Copiato!</span>
+                    </button>
+                    
+                @endforeach
+            </div>
             <div class="doc-editor">
                 <div class="doc-editor__viewport">
                     <div class="doc-editor__page">
@@ -101,7 +106,7 @@
             {{-- CAMPO NASCOSTO --}}
             <textarea name="body" id="body" hidden></textarea>
 
-            <button type="submit" class="my_btn_3" onclick="beforeSubmit()">Aggiorna contratto</button>
+            <button type="submit" class="my_btn_3 ml-auto" onclick="beforeSubmit()">Aggiorna contratto</button>
         </form>
     </div>    
     
@@ -113,7 +118,8 @@
 <script>
     const buttons = document.querySelectorAll('.map_toolbar button');
     const editor  = document.getElementById('editor');
-    
+    const variables = @json($variables);
+    //highlightVariables();
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -126,14 +132,71 @@
     function updateToolbar() {
         buttons.forEach(btn => {
             const cmd = btn.dataset.cmd;
-            try {
-                const isActive = document.queryCommandState(cmd);
-                btn.classList.toggle('active', isActive);
-            } catch (e) {
-                // alcuni comandi non supportano lo state
-            }
+
+            const isActive = document.queryCommandState(cmd);
+            btn.classList.toggle('active', isActive);
+
         });
     }
+    function updateHeadingToolbar() {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+
+        let node = selection.getRangeAt(0).startContainer;
+
+        // se è un text node, sali al parent
+        if (node.nodeType === 3) {
+            node = node.parentNode;
+        }
+
+        // reset
+        document.querySelectorAll('[data-heading]').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        if (!node || !node.tagName) return;
+
+        const tag = node.tagName.toLowerCase();
+
+        const btn = document.querySelector(`[data-heading="${tag}"]`);
+        if (btn) {
+            btn.classList.add('active');
+        }
+    }
+    // function highlightVariables() {
+    //     const variables = window.contractVariables || [];
+
+    //     let text = editor.innerHTML;
+
+    //     // rimuove highlight precedenti
+
+    //     const regex = /\{\{\s*([\w\-]+)\s*\}\}/g;
+
+    //     // Highlight variabili
+    //     let output = text.replace(regex, (match, varName) => {
+    //         if (variables.includes(varName)) {
+    //             return `<span class="highlight-variable">${match}</span>`;
+    //         }
+    //         return `<span class="invalid-variable">${match}</span>`;
+    //     });
+
+    //     // Gestione formattazione preview
+    //     output = output
+    //         .replace(/\/\*\/\s*/g, '<p class="paragraph-separator"></p>')
+    //         .replace(/\\n/g, '<br>');
+
+
+    //     editor.innerHTML = text;
+    // }
+
+
+    document.querySelectorAll('.copy-button').forEach(el => {
+        el.addEventListener('click', () => {
+            navigator.clipboard.writeText(el.dataset.copy).catch(err => {
+                console.error('Errore nel copiare il testo: ', err);
+            });
+        });
+    });
 
     document.querySelectorAll('[data-heading]').forEach(button => {
         button.addEventListener('click', () => {
@@ -146,12 +209,34 @@
     });
 
     // aggiorna toolbar mentre scrivi o ti muovi col cursore
-    editor.addEventListener('keyup', updateToolbar);
-    editor.addEventListener('mouseup', updateToolbar);
+    editor.addEventListener('keyup', () => {
+        updateToolbar();
+        updateHeadingToolbar();
+       // highlightVariables();
+    });
+
+    editor.addEventListener('mouseup', () => {
+        updateToolbar();
+        updateHeadingToolbar();
+        //highlightVariables();
+    });
+
+    editor.addEventListener('paste', function (e) {
+        e.preventDefault();
+
+        const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+
+        // inserisce SOLO testo semplice
+        document.execCommand('insertText', false, text);
+
+    });
+
 
     function beforeSubmit() {
+        
         const editor = document.getElementById('editor'); // usa l'ID corretto
         const body = document.getElementById('body');
+
         body.value = editor.innerHTML; // copia tutto l'HTML formattato
     }
 
