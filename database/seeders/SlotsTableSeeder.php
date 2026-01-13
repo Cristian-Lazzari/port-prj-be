@@ -21,7 +21,6 @@ class SlotsTableSeeder extends Seeder
                 'pos_y' => 900 + ($i * 2),
                 'pos_x' => 240 + ($i * 55),    
                 'rotation' =>2,
-    
             ]);
         }
         for ($i=1; $i < 12; $i++) { 

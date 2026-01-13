@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('settings/updateAll',     [SettingController::class, 'updateAll'])->name('settings.updateAll');
 
         Route::post('reservations/cancel',    [ReservationController::class, 'cancel'])->name('reservations.cancel');
+        Route::post('reservations/update_status',    [ReservationController::class, 'update_status'])->name('reservations.update_status');
 
         Route::post('clients/changeStatus',    [ClientController::class, 'changeStatus'])->name('clients.changeStatus');
 

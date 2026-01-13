@@ -15,7 +15,12 @@ class ContractController extends Controller
         $contract_body = json_decode(Setting::where('name', 'advanced')->first()->property, 1)['contract_body'];
        // $contract_path = json_decode(Setting::where('name', 'advanced')->first()->property, 1)['contract_path'];
         //dd($contract_body);
-        $availableVariables = [ 'nome_cliente', 'mail_cliente' ];
+        $availableVariables = [ 
+            'nome_cliente', 
+            'cognome_cliente', 
+            'telefono_cliente', 
+            'mail_cliente', 
+        ];
 
         return view('admin.Contract.edit', [
             'contract' => $contract_body,

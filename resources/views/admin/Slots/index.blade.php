@@ -92,6 +92,7 @@
                         });
                     @endphp
                     <div 
+                       
                         class="boat {{ $isOccupied ? 'on' : '' }}"
                         data-slot-id="{{ $s->id }}"
                         data-reservations='@json(
@@ -122,6 +123,7 @@
         <div class="box">
             @foreach ($slots as $r)
                 <div 
+                    id="slot-{{ $r->id }}"
                     class="item"
                     data-slotid="{{ $r->id }}"
                     data-reservations='@json(
@@ -368,6 +370,39 @@ document.addEventListener('DOMContentLoaded', () => {
         slot.addEventListener('mouseenter', () => highlight(slotId));
         slot.addEventListener('mouseleave', () => removeHighlight(slotId));
     });
+    // /* rimuovo selezione precedente barche */
+    // document
+    //     .querySelectorAll('.boat.selected-boat')
+    //     .forEach(el => el.classList.remove('selected-boat'));
+
+    // /* seleziono la barca cliccata */
+    // boat.classList.add('selected-boat');
+
+    boats.forEach(boat => {
+        boat.addEventListener('click', e => {
+            e.preventDefault();
+
+            const slotId = boat.dataset.slotId;
+            const target = document.getElementById(`slot-${slotId}`);
+
+            if (!target) return;
+
+            /* rimuovo selezione precedente */
+            document
+                .querySelectorAll('.item.selected-slot')
+                .forEach(el => el.classList.remove('selected-slot'));
+
+            /* aggiungo selezione allo slot corrente */
+            target.classList.add('selected-slot');
+
+            /* scroll allo slot */
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        });
+    });
+
 
 
     function isOccupied(reservations, selectedDate) {

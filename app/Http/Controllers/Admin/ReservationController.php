@@ -27,8 +27,9 @@ class ReservationController extends Controller
     public function index()
     {
         $reservations = Reservation::with('client','boat')->orderBy('created_at', 'desc')->get();
+        $slots = Slot::all();
 
-        return view('admin.Reservations.index', compact('reservations'));
+        return view('admin.Reservations.index', compact('reservations', 'slots'));
     }
 
 
@@ -78,6 +79,20 @@ class ReservationController extends Controller
     }
 
 
+    public function update_status(Request $request){
+        $data = $request->all();
+
+        $reservation = Reservation::where('id', $data['id'])->first();  
+        if (isset($data['slot_id'])) {
+            $reservation->slot_id = $data['slot_id'];
+        }
+        $reservation->status = $data['status'];
+        $reservation->update();
+
+        $m = $reservation->status ? 'Prenotazione confermata correttamente' : 'Prenotazione annullata correttamente';
+
+        return redirect()->route('admin.reservations.index')->with('message', $m);
+    }
     public function update(Request $request, $id)
     {
         $data = $request->all();
@@ -88,7 +103,9 @@ class ReservationController extends Controller
 
         $reservation->client_id = $id[1];
         $reservation->boat_id = $id[0];
-        $reservation->slot_id = $data['slot_id'];
+        if (isset($data['slot_id'])) {
+            $reservation->slot_id = $data['slot_id'];
+        }
         $reservation->start_date = Carbon::parse($data['start_date']);
         $reservation->end_date = Carbon::parse($data['end_date']);
         $reservation->status = $data['status'];

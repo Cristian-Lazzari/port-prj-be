@@ -730,10 +730,23 @@ html{
             display: flex;
             align-items: center;
             justify-items: center;
+            gap: 4px;
             svg{
                 fill: var(--c1);
                 height: $fs_sm_2;
                 width: $fs_sm_2;
+            }
+            .my_btn_1{
+
+                svg{
+                    fill: $c3;
+                }
+            }
+            .delete_btn{
+                background-color: red !important;
+                svg{
+                    fill: $c3;
+                }
             }
         }
         .name{
@@ -804,6 +817,7 @@ html{
             justify-content: center;
             align-items: center;
             text-transform: capitalize;
+            
         }
         .actions{
             display: flex;
@@ -3862,6 +3876,17 @@ section{
         
     }
 }
+.selected-slot {
+    border: 2px solid var(--c2);
+    box-shadow: inset 0 0 9px var(--c2) 0 0 9px var(--c2) ;
+    background-color: var(--c2) !important;
+    .slot{
+        color: var(--c3) !important;
+        text-shadow: 2px 2px 0 var(--c1);
+    }
+}
+
+
 .boat.hover-sync {
     box-shadow: 0 0 9px var(--c2) !important;
     transition: all .3s ease-in-out;
